@@ -47,25 +47,29 @@
 
 ###################################################################################################################################################
 
-#실습2_1
+# #실습2_1
 
-a = 3
-b = 6
-c = - 5
+# a = 3
+# b = 6
+# c = - 5
+# root_sol = (-b +-(b**2 - 4 * a * c)**(0.5))/2*a
+# print(root_sol)
 
-root_sol = (-b +-(b**2 - 4 * a * c)**(0.5))/2*a
 
+#실습2_2
+import string
 
-print(root_sol)
+s = input()     # 문자열 입력받기
+s.capitalize()  # 첫 글자는 대문자. 나머지는 소문자로 만드는 문자열 메소드
+print(s)
+for char in s.punctuation:
+    s = s.replace(char,'')
 
 # #과제 2_4
 
 # orders = '아이스아메리카노,카라멜마키야또,에스프레소,아메리카노,아메리카노,아이스라떼,핫초코,아이스아메리카노,아메리카노,아이스카라멜마키야또,아이스라떼,라떼마키야또,카푸치노,라떼마키야또'
 # orders = list(orders.split(','))
-
 # print(f'음료주문이 총 {len(orders)}잔 들어왔습니다.')
-
 # orders = set(orders.split(','))
 # orders = list(orders)
-
 # print(sorted(orders,reverse = True))
