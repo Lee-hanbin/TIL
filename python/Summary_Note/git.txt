@@ -1,0 +1,42 @@
+1. repository 생성 및 연동 방법
+	- repository 생성 => url 긁어오기
+	- git init
+	- git add.   <--- 파일을 staging area에 옮겨서 staged file 만듦
+	- git commit -m ' 요약 메세지' <--- repository로 옮겨서 tracked file 만듦
+	- git remote add origin "URL" <--- 원격 저장소
+	- git push origin master <--- 원격 저장소에 master라는 브랜치에 있는 tracked file을 push함
+
+2. clone 방법 (처음)
+	- git clone "url"	<--- 해당 url을 가진 원격 저장소 내의 파일들을 복사해온다.
+	- git pull origin master <--- origin이라는 이름을 가진 원격 저장소에서 master 브랜치에 있는 파일들을 최신화
+
+3. pull 방법 (두번째부터)
+	- git pull origin master
+
+4. push 방법 (처음)
+	- git push -u origin master
+
+5. push 방법(update방법)
+	- git add .
+	- git commit -m ' '
+	- git push origin master
+
+6. .gitignore
+	- repo 만들고 add 하기전에 .gitignore을 만들어서 git으로 관리하지 않을 파일들을 지정
+	- gitignore.io들어가서 지정하고 소스코드를 가져와야함
+
+*** conflict ***
+
+1. 멀캠에 HWS를 git에 push해서 수정함
+2. 노트북에 HWS는 수정되기 전의 파일임
+3. 노트북에서 HWS를 git에 push하면 reject 당함
+4. 노트북에서 git의 파일을 pull => master|merging 생김  => git add. => git commit -m ' ' => master|merging 사라짐
+5. 노트북에서 push 
+
+
+7. commit message 수정법
+	- git commit --amend
+	- vim editor
+	  - i : insert mode
+	  - :wq : 저장하고 나가기
+change commit message
