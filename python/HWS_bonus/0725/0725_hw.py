@@ -4,8 +4,9 @@
 #     sum = string.count('a') + string.count('e') + string.count('i') + string.count('o') + string.count('u')
 #     return sum
 
-# print(conut_vowels('apple'))
-# print(conut_vowels('banana'))
+# print(conut_vowels('free'))
+# print(conut_vowels('studnet'))
+# print(conut_vowels('serendipity'))
 
 # #2
 
