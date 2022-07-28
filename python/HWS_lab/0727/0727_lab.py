@@ -7,10 +7,12 @@ class Doggy():
     def __init__(self, name, breed ):
         self.name = name
         self.breed = breed
+        print(f'{breed}종인 {name}가 태어났습니다.')
         Doggy.num_of_dogs += 1
         Doggy.birth_of_dogs += 1
     
     def die(self):
+        print('사망')
         Doggy.num_of_dogs -= 1
 
     def bark(self):
