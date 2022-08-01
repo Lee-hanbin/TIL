@@ -139,7 +139,7 @@
   
   - X = func(Argument)
     
-    - **Psitional Argument**
+    - **Positional Argument**
       
       => 함수 호출 시 Argument는 위치에 따라 함수 내에 전달
     
