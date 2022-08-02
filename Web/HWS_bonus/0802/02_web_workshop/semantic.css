@@ -1,0 +1,114 @@
+body {
+  /* 1. body 전체에 알맞은 position을 작성하시오. */
+  
+
+  /* 아래는 자유롭게 수정하시오. */
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-style {
+  /* 2-1. header에 알맞은 position을 작성하시오. */
+
+  /* 2-2. header안의 컨텐츠들을 중앙정렬하시오. */
+  text-align: center;
+}
+
+.nav-style {
+  /* 3-1. nav에 알맞은 position을 작성하시오. */
+  margin:0 auto;
+  /* 3-2. nav를 컨텐츠 안에 꽉 채우시오.*/
+  width:fit-content;
+  /* 3-3. nav 아래쪽에 자유롭게 마진을 생성하시오. */
+  margin-bottom: 20px;
+}
+
+.section-style {
+  /* 4-1. section에 알맞은 position을 작성하시오. */
+
+  /* 4-2. section과 aside가 나란히 올 수 있도록 변경하시오. */
+  display: inline-block;
+  /* 4-3. section 내부의 컨텐츠가 상단에 위치할 수 있도록 변경하시오. */
+
+  /* 아래는 자유롭게 수정하시오. */
+  width: 35%; 
+  margin-left: 15%;
+}
+
+.article-style {
+  /* 5. article에 알맞은 position을 작성하시오. */
+  font-size: 1.65ch;
+  width:90%;
+  /* 아래는 자유롭게 수정하시오. */
+  vertical-align: top;
+
+}
+
+.aside-style {
+  /* 6-1. aside에 알맞은 position을 작성하시오. */
+  width:fit-content;
+  /* 6-2. section과 article가 나란히 올 수 있도록 변경하시오. */
+  display: inline-block;
+  /* 6-3. aside 내부의 컨텐츠가 상단에 위치할 수 있도록 변경하시오. */
+  vertical-align: top;
+
+  /* 아래는 자유롭게 수정하시오. */
+  width: 30%;
+  margin-top: 4rem;
+}
+
+.footer-style {
+  /* 7-1. footer에 알맞은 position을 작성하시오. */
+  width:fit-content;
+  /* 7-2. footer가 화면 가장 아래에 있을 수 있도록 위치를 조정하시오. */
+  position: fixed;
+  bottom: 30px;
+  /* 7-3. footer안의 컨텐츠들을 중앙정렬하시오. */
+  text-align: center;
+  /* 아래는 자유롭게 수정하시오. */
+  width: 90%;
+}
+
+.section-aside {
+  margin-bottom: 4rem;
+}
+
+/* 8. nav 태그 안에 있는 a 태그의 하이퍼링크 선을 제거하시오. */
+/* 9. a 태그 간의 좌우 간격이 존재하도록 마진을 생성하시오. */
+nav a {
+  text-decoration: None;  
+  margin-left: 2px;
+  margin-right: 2px;
+
+}
+
+/* 10. 배경 색상을 white로 변경하시오.*/
+/* 11. 배경 색상의 투명도를 80%로 변경하시오. */
+.bg-white {
+  background-color: white;
+  opacity: 0.8;
+}
+
+/* 12. 텍스트 색상을 grey로 변경하시오.*/
+.text-grey {
+  color :gray
+}
+
+/* 13. 텍스트 색상을 brown으로 변경하시오.*/
+.text-brown {
+  color : brown
+}
+
+/* 14. 이미지의 크기가 content에 꽉 찰 수 있도록 변경하시오.*/
+.img-width {
+  width:fit-content;
+  height: 400px;
+}
+
+/* 15. 필요에 따라 자유롭게 스타일을 추가 작성하시오. */
+.img-head {
+  width:fit-content;
+  height: 180px;
+  width: 98%;
+}

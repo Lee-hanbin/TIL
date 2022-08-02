@@ -139,7 +139,11 @@
   
   - X = func(Argument)
     
+<<<<<<< HEAD
     - **Psitional Argument**
+=======
+    - **Positional Argument**
+>>>>>>> 32b244f63011456bfbaef6bf3916f2c570d85ec5
       
       => 함수 호출 시 Argument는 위치에 따라 함수 내에 전달
     
