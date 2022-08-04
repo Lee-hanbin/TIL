@@ -1,2 +1,39 @@
 /* 여기에 코드를 작성합니다. */
 /* 모든 스타일은 반드시 클래스 선택자를 이용해 정의합니다. 이후 HTML 태그에 해당 클래스를 적용합니다. */
+
+.chess_board {
+  border: 2px solid black;
+  width: 800px;
+  height: 800px;
+  font-size: 0;
+}
+
+.chess_box {  
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+
+.black {
+  background-color: black;
+}
+
+.pawn {
+  background-image: url("chess_img/black_pawn.png");
+  background-size: contain;
+}
+
+.king {
+  background-image: url("chess_img/white_king.png");
+  background-size: contain;
+}
+
+.queen{
+  background-image: url("chess_img/white_queen.png");
+  background-size: contain;
+}
+
+.rook {
+  background-image: url("chess_img/white_rook.png");
+  background-size: contain;
+}
