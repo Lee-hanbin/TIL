@@ -1,6 +1,4 @@
-#1209번-220810_list2 (2)
-import sys
-sys.stdin = open('sum_input.txt')
+#SWea1209번-220810_list2 (2)
 
 for k in range(10):
     N = int(input())

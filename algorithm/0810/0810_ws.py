@@ -1,4 +1,4 @@
-#1954번-달팽이 숫자
+#SWea1954번-달팽이 숫자
 
 N = int(input())
 for test_cnt in range(N):
