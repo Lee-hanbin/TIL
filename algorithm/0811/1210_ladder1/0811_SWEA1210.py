@@ -13,10 +13,11 @@ for test_case in range(1, 11):
     for x in range(100):
         if lst[0][x] == 2:
             chk = x
+            break
 
     # 마지막까지 가면 스탑
     while y < 100:
-        lst[y][chk] = 2 #지나간 길은 2로 표시
+        lst[y][chk] = ' ' #지나간 길은 2로 표시
         # 우측이 벽이 아니고 우측에 길이 있으면 우측으로 이동
         if chk + 1 < 100 and lst[y][chk + 1] == 1:
             chk += 1
