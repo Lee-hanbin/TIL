@@ -3,18 +3,28 @@
 import sys
 sys.stdin = open('input (2).txt')
 
-T = int(input())
-
-for test_case in range(T):
-    lst = [input() for _ in range(100)]
-    set1 = set()
-    for s in lst:
-        for i in range(100):
-            for j in range((100 - i - 1)//2):
-                if s[i+j] != s[(100 - i - 1) -j] and ((99 - j) // 2 + 1) != j:
+def pal(str1, max_len, N):
+    for i in range(N - max_len):
+        if N - i == max_len:
+            break
+        for k in range(N - max_len - i):
+            for j in range((N - i - k) // 2):
+                if str1[i + j] != str1[N - 1 - k - j]:
                     break
-                else:
-
-
-
-
+            else:
+                if max_len < N - i - k:
+                    max_len = N - i - k
+    return max_len
+for _ in range(10):
+    T = int(input())
+    N = 100
+    lst = [input() for _ in range(N)]
+    lst2 = []
+    max_len = 1
+    for s in lst:
+        max_len = pal(s, max_len, N)
+    for i in zip(*lst):
+        lst2.append(''.join(i))
+    for s in lst2:
+        max_len = pal(s, max_len, N)
+    print(f'#{T} {max_len}')
