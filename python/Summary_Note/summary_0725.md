@@ -55,6 +55,8 @@
 - **문자열 변경 메서드**
   
   - `s.replace(old, new [, count] )`: old문자를 new문자로 바꿔서 반환
+    
+    - `string = s.replace(old, new)` 로 사용해야함 s가 변하는게 아님
   
   - `s.strip( [chars] )` : 공백이나 특정 문자를 제거
     
