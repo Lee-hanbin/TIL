@@ -26,8 +26,6 @@ for _ in range(10):
             dict1[lst[k]].append(lst[k+1])  # 노드가 이미 있는 경우
             # print('추가', dict1)
 
-    lst_chk = list(set_chk)                 #set을 list로 생성
-
 
     chk = 0  # 길을 찾았는 지 여부를 확인할 변수
     node = 0  # 첫 시작은 0에서 합니다.
@@ -37,10 +35,10 @@ for _ in range(10):
             if len(dict1[node]) > 1:    # 갈림길이면 stack에 추가
                 stack.append(node)
             node = dict1[node].pop()  # dictionary에서 자식 노드를 고릅니다.
-        except:  # 노드에 자식이 없으면 stact2에서 pop해온다
+        except:  # 노드에 자식이 없으면 stack에서 pop해온다
             try:
                 node = stack.pop()
-            except:  # stack2가 비어있으면 while문을 나온다.
+            except:  # stack이 비어있으면 while문을 나온다.
                 break
         if node == 99:
             chk = 1
