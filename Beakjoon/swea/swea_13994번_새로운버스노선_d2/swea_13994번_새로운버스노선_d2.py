@@ -3,39 +3,39 @@
 import sys
 sys.stdin = open('sample_in.txt')
 
-def general(A, B):
-    nosun = []
-    for i in range(A, B+1):
-        nosun.append(i)
-    return nosun
-
-def ex(A, B):
-    nosun = []
-    if A % 2 == 0:                      # 짝수이면
-        for i in range(A, B+1, 2):
-            nosun.append(i)
-    else:                               # 홀수이면
-        for i in range(A, B+1, 2):
-            nosun.append(i)
-    if B not in nosun:
-        nosun.append(B)
-    return nosun
-
-def sp(A, B):
-    nosun = []
-    if A % 2 == 0:                      # 짝수이면
-        for i in range(A, B+1):
-            if i % 4 == 0:
-                nosun.append(i)
-    else:                               # 홀수이면
-        for i in range(A, B+1):
-            if i % 3 == 0 and i % 10 != 0:
-                nosun.append(i)
-    if B not in nosun:
-        nosun.append(B)
-    if A not in nosun:
-        nosun.append(A)
-    return nosun
+# def general(A, B):
+#     nosun = []
+#     for i in range(A, B+1):
+#         nosun.append(i)
+#     return nosun
+#
+# def ex(A, B):
+#     nosun = []
+#     if A % 2 == 0:                      # 짝수이면
+#         for i in range(A, B+1, 2):
+#             nosun.append(i)
+#     else:                               # 홀수이면
+#         for i in range(A, B+1, 2):
+#             nosun.append(i)
+#     if B not in nosun:
+#         nosun.append(B)
+#     return nosun
+#
+# def sp(A, B):
+#     nosun = []
+#     if A % 2 == 0:                      # 짝수이면
+#         for i in range(A, B+1):
+#             if i % 4 == 0:
+#                 nosun.append(i)
+#     else:                               # 홀수이면
+#         for i in range(A, B+1):
+#             if i % 3 == 0 and i % 10 != 0:
+#                 nosun.append(i)
+#     if B not in nosun:
+#         nosun.append(B)
+#     if A not in nosun:
+#         nosun.append(A)
+#     return nosun
 
 # 1
 # 3
@@ -54,18 +54,43 @@ for t in range(int(input())):
     bus = []
     for i in lst:
         bus.append(i[0])
-    i = 0
-
-    while i<N:
-        A = lst[i][1]                   # 버스 출발
-        B = lst[i][2]                   # 버스 종점
+    k = 0
+    # i = 0
+    while k < N:
+        A = lst[k][1]                   # 버스 출발
+        B = lst[k][2]                   # 버스 종점
         save = []
-        if bus[i] == 1:
-            save = general(A, B)
-        elif bus[i] == 2:
-            save = ex(A, B)
+        # if bus[i] == 1:
+        #     save = general(A, B)
+        # elif bus[i] == 2:
+        #     save = ex(A, B)
+        # else:
+        #     save = sp(A, B)
+        if bus[k] == 1:
+            for i in range(A, B + 1):
+                save.append(i)
+        elif bus[k] == 2:
+            if A % 2 == 0:  # 짝수이면
+                for i in range(A, B + 1, 2):
+                    save.append(i)
+            else:  # 홀수이면
+                for i in range(A, B + 1, 2):
+                    save.append(i)
+            if B not in save:
+                save.append(B)
         else:
-            save = sp(A, B)
+            if A % 2 == 0:  # 짝수이면
+                for i in range(A, B + 1):
+                    if i % 4 == 0:
+                        save.append(i)
+            else:  # 홀수이면
+                for i in range(A, B + 1):
+                    if i % 3 == 0 and i % 10 != 0:
+                        save.append(i)
+            if B not in save:
+                save.append(B)
+            if A not in save:
+                save.append(A)
 
         for j in save:
             temp = len(set1)
@@ -74,8 +99,8 @@ for t in range(int(input())):
                 dict1[j] = 1
             else:                       # key가 존재하면 갱신
                 dict1[j] += 1
-        i += 1
-
+        k += 1
+        # i += 1
 
     # 겹치는 노선 최대 몇개
     sol = max(dict1.values())
