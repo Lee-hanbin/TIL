@@ -1,0 +1,28 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+  <p>--------이건 그냥 검색창이지롱~ 검색 안되니까 누르지마~ 확인하려면 url창 봐봐 search 보이지?------</p>
+  <form action="/catch/", method="GET">
+    <label for="search"> search </label>
+    <input type="text", name="search", id="search"> <!-- 라벨이랑 input연동-->
+    <input type="submit">
+  </form>
+
+  <p>--------이건 variable routing -----------</p>
+  <form action="/hello/", method="GET">
+    <label for="search"> search </label>
+    <input type="text", name="search", id="search"> <!-- 라벨이랑 input연동-->
+    <input type="submit">
+  </form>
+
+
+  <p>---------이건 검색 되니까 IU 쳐봐 힐링힐링 --------------</p>
+  <form action="https://search.naver.com/search.naver">
+    <input type="text", name="query">
+    <input type="submit">
+  </form>
+
+
+  <a href="{% url 'index' %}">처음으로</a>
+
+{% endblock content %}
