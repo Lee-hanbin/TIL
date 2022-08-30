@@ -1,10 +1,98 @@
+# Django
+
+---
+
+## 1. 정의
+
+- Django는 python의 class 모음집이다.
+  
+  ex) 밀키트 (누군가 만들어 놓은 소스를 사용하여 원하는 작업을 함)
+
+- Django는 framework이다.
+  
+  - framework을 부정적으로 생각하지 말자.
+  
+  - 효율적인 작업을 하는 것
+
+- Django는 Web의 framework이다.
+
+- Django는 Server를 만드는 것이라 볼 수 있음
+  
+  - 클라이언트가 정보를 요청하면 Server가 정보를 보내줌
+
+- Web browser
+  
+  - Web page code를 받으면 사용자가 바라보는 web page로 바꿔줌
+
+- Web page 
+  
+  - 사용자가 바라보는 화면 한장 한장
+  
+  - 동적웹페이지, 정적웹페이지
+
+---
+
+## 2. 구조
+
+- MTV pattern 
+  
+  - Model Templete View
+  
+  cf) MVC pattern(Model View Controller)
+  
+  - Model
+    
+    - 데이터와 관련된 로직을 관리
+    
+    - 응용프로그램의 데이터 구조를 정의하고 DB의 기록을 관리
+  
+  - Templete
+    
+    - 레이아웃과 화면을 처리
+    
+    - 화면상의 사용자 인터페이스 구조와 레이아웃을 정리
+    
+    - MVC 패천에서 View의 역할
+  
+  - View
+    
+    - Model과 Templete에 관련된 로직을 처리하여 응답을 반환
+    
+    - 클라이언트의 요청에 대해 처리를 분리하는 역할
+    
+    - MVC 패턴에서 Controller 역할
+
+---
+
+## 3. 실행순서
+
+- 가상환경 설정
+
+- 시스템 환경 설정
+
+- 패키지 목록 생성
+
+- 프로젝트 생성
+
+- 어플리케이션 생성
+
+- 프로젝트에 어플리케이션 정의
+
+- 어플리케이션 함수 가져오기
+
+- 어플리케이션에 함수 정의
+
+- 프로젝트에 templete을 생성하고 html파일 생성
+
+- 서버를 실행해서  해당 html 확인
+
 ### 가상환경 설정
 
 - `python -m venv venv` : venv라는 가상환경 설정
   
   - 마지막 venv는 가상환경의 이름 => 웬만하면 venv로 설정하자
 
-- `pip list`  : 현재 라이브러리 보기
+- `pip list` : 현재 라이브러리 보기
 
 - `source venv/Scripts/activate` : 가상환경에 들어가기
 
@@ -56,23 +144,23 @@
   
   - 일반적으로 애플리케이션 이름은 `복수형`으로 작성하는 것을 권장
 
-- `__init__.py` 
+- `__init__.py`
 
-- `admin.py`  :  `관리자용 페이지`를 설정 하는 곳
+- `admin.py` : `관리자용 페이지`를 설정 하는 곳
 
-- `apps.py`  
+- `apps.py`
   
   - 앱의 정보가 작성된 곳
   - 별도로 추가 코드를 작성하지 않음
 
-- `models.py`  
+- `models.py`
   
   - 애플리케이션에서 사용하는 `Model`을 정의하는곳
   - MTV 패턴의 `M`에 해당
 
-- `tests.py`  : 프로젝트의 `테스트 코드`를 작성하는 곳
+- `tests.py` : 프로젝트의 `테스트 코드`를 작성하는 곳
 
-- `views.py`  
+- `views.py`
   
   - `view 함수`들이 정의 되는 곳
   - MTV 패턴의 `V`에 해당
@@ -152,32 +240,31 @@
     
     - `http://127.0.0.1:8000/index` 입력하면 해당 index를 웹 브러우저로 구현
 
-```python
-#Django 실행순서
-가상환경 설정
-
-시스템 환경 설정
-
-패키지 목록 생성
-
-프로젝트 생성
-
-어플리케이션 생성
-
-서버 실행
-
-프로젝트에 어플리케이션 정의
-
-어플리케이션 함수 가져오기
-
-어플리케이션에 함수 정의
-
-프로젝트에 template를 생성하고 index.html을 생성
-
-서버를 실행해서 index.html 확
-```
-
 ---
+
+## 4. 기능
+
+- Variable
+
+- Filter
+
+- Tags
+
+- Comment
+
+- Templete
+
+- Form
+
+- GET
+
+- Trailing Slashes
+
+- Variable routing
+
+- App URL mapping
+
+- Naming URL Pattern
 
 ### Variable
 
@@ -796,7 +883,7 @@ def hello(request, name):
 
 - `path('pages/' include('pages.urls'))`
   
-  - include()는다른  URLconf들을 참조할 수 있도록 돕는 함수
+  - include()는다른 URLconf들을 참조할 수 있도록 돕는 함수
 
 - 막약 pages의 urls.py에 urlpatterns가 공백리스트로 라도 존재하지 않으면 에러발생
 
@@ -808,7 +895,7 @@ def hello(request, name):
 
 - path()함수의 name인자를 정의해서 사용
 
-- DTL의 Tag 중 하나인  URL 태그를 사용해서 path() 함수에 작성한 name을 사용가능
+- DTL의 Tag 중 하나인 URL 태그를 사용해서 path() 함수에 작성한 name을 사용가능
 
 - 이를 통해 URL 설정에 정의된 특정한 경로들의 의존성을 제거할 수 있음
 
@@ -817,8 +904,6 @@ def hello(request, name):
 - `<a herf="/index/">처음으로</a>`을
   
   - 으로 `<a herf="{% url 'index' %}"> 처음으로</a>` 바꿔준다.
-
-### 
 
 ```python
 #firstpjt/urls.py
