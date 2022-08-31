@@ -1,8 +1,10 @@
 from django.urls import path
+#명시적 상대경로
 from . import views
 
 # articles's urls.py
 
+app_name = 'articles'
 urlpatterns = [
     path('index/', views.index, name='index'),
     path('dtl/', views.dtl, name='dtl'),

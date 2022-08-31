@@ -1,0 +1,10 @@
+{% extends 'articles/base2.html' %}
+
+{% block content %}
+  <h1>만나서 방가방가</h1>
+  <p> 여긴 시작점이야 하나씩 눌러봐</p>
+  <a href="{% url 'articles:dtl' %}">dtl</a>
+  <a href="{% url 'articles:dtl2' %}">dtl2</a>
+  <a href="{% url 'articles:throw' %}">검색하러가자</a>
+  <a href="{% url 'pages:index' %}">두번째 앱의 인덱스 고고!</a>
+{% endblock content %}

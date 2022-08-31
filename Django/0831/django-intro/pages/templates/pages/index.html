@@ -1,0 +1,7 @@
+{% extends 'pages/base.html' %}
+
+{% block content %} 
+  <h1>두번째앱의 인덱스 페이지!</h1>
+  <p>방가방가</p>
+  <a href=" {% url 'articles:index' %} ">첫번째 앱의 인덱스로 고고</a>
+{% endblock content %} 

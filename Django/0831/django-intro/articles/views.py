@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'articles/index.html')
 
 def dtl(request):
     # name = 'jun'
@@ -13,7 +13,7 @@ def dtl(request):
         'age' : 20,
         'foods' : ['apple', 'grape']
     }
-    return render(request, 'dtl.html', context)
+    return render(request, 'articles/dtl.html', context)
 
 def dtl2(request):
     # name = 'jun'
@@ -23,10 +23,10 @@ def dtl2(request):
         'age' : 20,
         'foods' : ['apple', 'grape']
     }
-    return render(request, 'dtl2.html', context)
+    return render(request, 'articles/dtl2.html', context)
 
 def throw(request):
-    return render(request, 'throw.html')
+    return render(request, 'articles/throw.html')
 
 def catch(request):                         
     # print(request.GET.get('search'))
@@ -36,7 +36,7 @@ def catch(request):
         'value' : value,
         'name' : name,
     }
-    return render(request, 'catch.html', context)
+    return render(request, 'articles/catch.html', context)
 
 def hello(request, name):
     context = {
