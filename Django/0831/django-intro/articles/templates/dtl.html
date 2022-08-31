@@ -1,0 +1,34 @@
+<!-- ariticles/templates/index.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 생략 -->
+</head>
+<body>
+  <p> 이건 처음만든 drl이야</p>
+  
+  <h1>dtl</h1>
+  <p>-----------------여기는 values야---------------</p>
+  <p>{{name}}</p>
+  <p>{{age}}</p>
+  <p>{{name}}의 나이는 {{age}}야!</p>
+  <p>{{foods.0}}</p>
+  <p>{{foods.1}}</p>
+  <p>------------여기는 filter야 4 넣었어-----------</p>
+  <p>{{name|lower|truncatechars:4}}</p>
+  <p>------------------여기는 tag야------------</p>
+  <p> ########for 문######### </p>
+  {% for food in foods %}
+    <p>{{food}}</p>
+  {% endfor %}
+  <p> #########if 문#########</p>
+  {% if age < 0 %}
+    <p>{{ age }}</p>
+  {% else%}
+    <p> {{0}}</p>
+  {% endif %}
+  <a href="{% url 'index' %}">처음으로!</a>
+</body>
+</html>
+

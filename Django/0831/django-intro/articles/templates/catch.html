@@ -1,0 +1,7 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+  <p>{{value}}를 받았어!</p>
+  <p>감사링~ {{name}}</p>
+  <a href="{% url 'throw' %}">throw</a>
+{% endblock content %}
