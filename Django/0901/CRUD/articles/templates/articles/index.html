@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Articles index</h1>
+  <p>{{ articles }}</p>
+  <a href="{% url 'articles:new' %}">새글 작성</a>
+
+  {% for article in articles %}
+    <p>{{ article }}</p>
+    <a href=" {% url 'articles:detail' article.pk %}">디테일 페이지
+      <p>제목: {{ article.title}}</p>
+    </a>
+
+    <p>내용: {{ article.content }}</p>
+    {% comment %} <p>{{ article.title }} </p>
+    <p>{{ article.content }} </p> {% endcomment %}
+    <hr>
+  {% endfor %}
+{% endblock content %}

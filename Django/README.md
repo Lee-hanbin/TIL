@@ -86,6 +86,20 @@
 
 - 서버를 실행해서  해당 html 확인
 
+- namespace와 templates space 
+
+- Django Model 설정
+  
+  - makemigration과 migrate로 스키마 만들기
+  
+  - CRUD를 이용하여 DB 자료를 관리
+    
+    1. shell을 이용
+    
+    2. function을 이용
+
+. admin 이용해서 관리하기.
+
 ### 가상환경 설정
 
 - `python -m venv venv` : venv라는 가상환경 설정
@@ -510,6 +524,8 @@ def dtl2(request):
 ```
 
 ### Template 경로
+
+- 상속을 하기 위해 사용 `{% extends 'base.html' %}`
 
 ```python
 #settings.py

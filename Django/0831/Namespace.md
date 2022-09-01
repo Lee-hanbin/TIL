@@ -12,7 +12,7 @@
     
     2. `Template namespace`
 
-### URL namespace
+### 1. URL namespace
 
 - `app_name` + `:` + `URL name`
 
@@ -40,13 +40,13 @@
 
 ---
 
-### Template
+### 2. Template
 
 - Django는 기본적으로 `app_name/templates/`경로에 있는 templates파일들만 찾을 수 있으며, `settings.py`의 `INSTALLED_APP`에 작성한 app 순서로 templates을 검색 후 렌더링 함
   
-  - 즉, templates는 어떤 app의 index임이 중요한게 아니라 그냥 templates 안에 어떤 html파일이 존재하는 가에 따라 다르다.
+  - 즉, templates는 어떤 app의 index임이 중요한게 아니라 그냥 `templates 안에 어떤 html파일`이 `존재`하는 가에 따라 다르다.
   
-  - 따라서 index라는 html이 2개 존재한다면 app의 등록 순서에 따라 작동한다.
+  - 따라서 index라는 `html이 2`개 존재한다면 `app의 등록 순서`에 따라 작동한다.
   
   - 그렇기 때문에 index라는 html파일 앞에 경로를 하나 더 만들어 줘야만 한다.
     
@@ -74,7 +74,7 @@
 
 ---
 
-## Django Model
+# Django Model
 
 ---
 
@@ -106,7 +106,7 @@
   
   - 관계(Relation)라고도 부름
     
-    - 필드(field) 
+    - `필드(field)`
       
       - 속성, 컬럼(Column)
       
@@ -114,7 +114,7 @@
         
         ex)INT, TEXT ...
     
-    - 레코드(record) 
+    - `레코드(record)` 
       
       - 튜플, 행(Row)
       
@@ -142,7 +142,7 @@
     
     => DB를 조작한다.
 
-### 3.  Model
+## 3.  Model
 
 #### 개요
 
@@ -156,7 +156,7 @@
 
 #### 스키마
 
-- 프로젝트의 settings에 app을 설치하고 시작
+- 프로젝트의 `settings`에 `app을 설치`하고 시작
 
 - `models.py`
   
@@ -195,11 +195,11 @@
     
     - 실제로 저장될 때 길이에 대한 유효성을 검증하지 않음( 불필요함 )
 
-### 4. Migrations
+## 4. Migrations
 
 #### 개요
 
-- 모델에 대한 청사진을 만들고 이를 통해 테이블을 생성하는 일련의 과정
+- 모델에 대한 청사진 을 만들고 이를 통해 테이블을 생성하는 일련의 과정
 
 - Django가 모델에 생긴 변화(필드 추가, 모델 삭제 등)를 DB에 반영하는 방법
 
@@ -211,7 +211,7 @@
   
   - `articles/migrations`에 `0001_initial.py`이 생성
     
-    - fields 안에 `id, title, content` => 위에사 작성한 스키마에 `id`가 추가 돼서 생성
+    - fields 안에 `id, title, content` => 위에서 작성한 스키마에 `id`가 추가 돼서 생성
   
   - 스키마를 파이썬에서 클래스로 만들고 `makemigrations`를 통해 `migration` 을 만들고 이렇게 만들어진 것이 `설계도(청사진)` 이다
   
@@ -251,11 +251,11 @@
 
 - `created_at = models.DateTimeField(auto_now_add=True)`
   
-  - 만들었을 때 시간
+  - 만들었을 때 시간(`auto_now_add`)
 
 - `update_at = models.DateTimeField(auto_now= True)`
   
-  - 업데이트 했을 때 시간
+  - 업데이트 했을 때 시간(`auto_now`)
   
   - `python manage.py makemigrations`
     
@@ -305,19 +305,19 @@
     
     - Django ORM이 save를 할 때마다 현재 날짜와 시간으로 갱신
 
-### 5. ORM
+## 5. ORM
 
 #### 개요
 
 - makemigrations로 인해 만들어진 설계도는 파이썬으로 작성되어 있음
 
-- 누가 SQL만 알아 들을 수 있다는 DB가 어떻게 이 설계도를 이해하고 동기화를 이룰 수 있을까?
+- 누가 SQL만 알아 들을 수 있다는 `DB`가 `어떻게` 이 설계도를 `이해`하고 `동기화`를 이룰 수 있을까?
 
 - 이러한 과정에서 중간에 번역을 담당하는 것이 `ORM`
 
-- Object-Relational-Mapping
+- `Object-Relational-Mapping`
 
-- 객체 지향 프로그래밍 언어를 사용하여 호환되지 않는 유형의 시스템 간에 데이터를 변환하는 프로그래밍 기술 ( Django <-> DB)
+- 객체 지향 프로그래밍 언어를 사용하여 호환되지 않는 유형의 `시스템 간에 데이터를 변환`하는 프로그래밍 기술 ( Django <-> DB)
 
 - 객체 지향 프로그래밍에서 데이터베이스를 연동할 때, 데이터베이스와 객체 지항 프로그래밍 언어 간의 호환되지 않는 데이터를 변환하는 프로그래밍 기법
 
@@ -327,13 +327,13 @@
 
 - 장점
   
-  - SQL을 잘 알지 못해도 객체지향 언어로 DB 조작이 가능
+  - `SQL을 잘 알지 못해도` 객체지향 언어로 `DB 조작이 가능`
   
-  - 객체 지향적 접근으로 인한 높은 생산성
+  - 객체 지향적 접근으로 인한 `높은 생산성`
 
 - 단점
   
-  - ORM 만으로 완전한 서비스를 구현하기 어려운 경우가 있음
+  - ORM 만으로 완전한 서비스를 `구현하기 어려운 경우가 있음`
 
 - ORM 사용 이유
   
@@ -341,13 +341,17 @@
 
 #### QuerySet API
 
-- `pip install ipython`+ ` ` + `django-extentions`
+- `pip install ipython`+ ` ` + `django-extensions`
   
   - 2개를 한번에 설치하려면 띄어쓰고 하나 더 입력
 
 - `crud` => `settings` => `INSTALLED_APPS` => `'django_extensions',` 추가
 
 - `pip freeze > requirment.txt`
+
+- `주의` 
+  
+  - pip는 django-extensions 이고 settingss는 django_extensions로 적기
 
 ##### 준비과정
 
@@ -389,7 +393,7 @@
   
   - `'python manage.py shell'`은 불친절
 
-#### QuerySet API
+##### QuerySet API
 
 - `Article.obiects.all()` => `<QuerySet []>`로 빈 쿼리셋을 줌
   
@@ -481,7 +485,7 @@
   Out[17]: 2
   ```
 
-- save를 호출하지 않는 방법(세번쨰)
+- save를 호출하지 않는 방법(세번쨰) `(추천하지 않음 )`
 
 - ```python
   # 생성 세번째 방법
@@ -507,7 +511,7 @@
   
   - QuerySet return
   
-  - 전체 데이터 조회
+  - `전체` 데이터 조회
   
   - ```python
     n [18]: Article.objects.create(title='third', content='django!')     
@@ -528,7 +532,7 @@
 
 - `get()`
   
-  - 단일 데이터 조회
+  - `단일` 데이터 조회
   
   - 객체를 찾을 수 없으면 DoesNotExist 예외를 발생시킴
   
@@ -720,11 +724,12 @@
       # PK는 자동 생성되기에 따로 지정 x
       created_at = models.DateTimeField(auto_now_add=True)
       updated_at = models.DateTimeField(auto_now= True)
-  
-  
-      # 이거 추가
-      def __str__(self):
-          return self.title
   ```
-
-- 이건 DB에 영향을 주지 않기 때문에 `makemigrations` 을 사용하지 않는다.
+  
+  ```python
+  # 이거 추가
+  def __str__(self):
+      return self.title
+  ```
+  
+  => 이건 DB에 영향을 주지 않기 때문에 `makemigrations` 을 사용하지 않는다.
