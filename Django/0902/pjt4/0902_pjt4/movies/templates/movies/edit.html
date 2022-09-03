@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>EDIT</h1>
+  <form action="{% url 'movies:create' %}" method="POST">
+    {% csrf_token %}
+
+    <label for="title" value= {{movie.title}}>TITLE</label>
+    <input type="text" name="title" id="title">
+    <br>
+    <label for="audience">AUDIENCE</label>
+    <input type="text" name="audience" id="audience">
+    <br>
+    <label for="release_date">RELEASE_DATE</label>
+    <input type="date" name="release_date" id="release_date">
+    <br>
+    <label for="genre">GENRE</label>
+    <select name="genre" id="genre">
+      <option value="1">코미디</option>
+    </select>
+    <br>
+    <label for="score">SCORE</label>
+    <input type="score" name="score" id="score" size = 5>
+    <br>
+    <label for="poster_url">POSTER_URL</label>
+    <input type="poster_url" name="poster_url" id="poster_url">
+    <br>
+    <label for="description">DESCRIPTION</label>
+    <textarea cols="15" rows="5" nema="description"></textarea>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr/>
+  <a href="{% url 'movies:index' %}">BACK</a>
+{% endblock content %}
