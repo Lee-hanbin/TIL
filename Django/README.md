@@ -187,7 +187,7 @@
     
     - 어플리케이션 articles 설치
     
-    - `'article'`
+    - `'articles'`
   
   - 그 뒤에 3rd part
   
@@ -212,7 +212,7 @@
         return render(request, 'index.html')
     ```
   
-  - `reder(request, template_name, context)`
+  - `render(request, template_name, context)`
     
     - 주어진 템플릿을 주어진 컨텍스트 데이터와 결합하고 렌더링 된 텍스트와 함께 응답 개체를 반환하는 함수
     

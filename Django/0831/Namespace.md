@@ -14,6 +14,10 @@
 
 ### 1. URL namespace
 
+- apps 에 url 생성
+  
+  - `from . import views`  :명시적 상대경로
+
 - `app_name` + `:` + `URL name`
 
 - `urls.py`
@@ -56,7 +60,7 @@
   
   ex) `articles/templates/articles/index.html`
   
-  ex) `pages/templates/pages/index_html`
+  ex) `pages/templates/pages/index.html`
   
   - 따라서 앞으로 template을 가져올 때 `articles/index.html`로 가져온다.
 
@@ -347,7 +351,7 @@
 
 - `crud` => `settings` => `INSTALLED_APPS` => `'django_extensions',` 추가
 
-- `pip freeze > requirment.txt`
+- `pip freeze > requirements.txt`
 
 - `주의` 
   
