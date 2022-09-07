@@ -24,7 +24,7 @@ class ArticleForm(forms.ModelForm):
         label='제목',
         widget=forms.TextInput(
             attrs={
-                'class' : 'my-title',
+                'class' : 'my-title form-control',
                 'placeholder' : 'Enter the title',       # 입력창에 입력 전에 나오는 문구
                 'maxlength' : 10,                        # 위젯은 유효성 검사와 무관
             }                                            # 쟝고와 상관없이 단지 10자까지만 입력되게 하는 것
@@ -35,7 +35,7 @@ class ArticleForm(forms.ModelForm):
         label='내용',
         widget= forms.Textarea(
             attrs={
-                'class' : 'my-content',
+                'class' : 'my-content form-control' ,
                 'placeholder' : 'Enter the content',
                 'rows' : 5,
                 'cols':50,                

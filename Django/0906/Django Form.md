@@ -1,5 +1,7 @@
 # Django Form
 
+
+
 ## 1. 개요
 
 - 현재는 Django 서버에 들어오는 모든 요청을 수용하고 있으나, 이러한 요청 중에 비정상적인 혹은 악의적인 요청이 있다는 것을 고려해야함
@@ -9,17 +11,23 @@
   - 이러한 유효성검증은 많은 부가적인 것들을 고려해서 구현해야 하는데, 이는 개발 생산성을 늦추고 어려운 작업
 - `Django Form`이 이러한 과정을 줄여주면서 `효율적인 유효성 검증`을 돕는다.
 
+
+
 ## 2. 역할
 
 - Form은 Django의 유효성 검사 도구 중 하나로 외부의 악의적 공격 및 데이터 손상에 대한 중요 방어수단
 - 유효성 검사를 `단순화하고 자동화` 할 수 있는 기능을 제공하며, 개발저가 직접 작성하는 코드보다 더 안전하고 빠르게 수행 하는 코드 작성 가능
   - 개발자가 필요한 핵심 부분만 집중할 수 있도록 돕는 프레임워크의 특성을 갖음
 
+
+
 ## 3. 처리
 
 - 렌더링을 위한 데이터 준비 및 재구성
 - 데이터에 대한 HTML forms 생성
 - 클라이언트로부터 받은 데이터 수신 및 처리
+
+
 
 ## 4. The Django Form Class
 
@@ -165,6 +173,8 @@
   	# RadioSelect 위젯을 이용하여 버튼 방식으로 바꿔줌
   ```
 
+
+
 ## 5. Django modelForm
 
 ### 개요
@@ -199,8 +209,6 @@ class ArticleForm(forms.ModelForm):
 ```
 
 - 위에서는 `하나씩 지정`해줘야 했을 뿐만 아니라 `위젯도 지정`이 필요했으나, 알아서 처리해준다.
-
-
 
 #### Meta Class
 
@@ -263,6 +271,8 @@ class ArticleForm(forms.ModelForm):
 - `주의사항`
   - 파이썬의 문법적 개념으로 접근하지 마!
   - 단순 ModelForm이 이렇게 설계되어 있음을 알면 되는 것이지 분석하는 것이 의미가 있는 것은 아님
+
+
 
 ## 6. ModelForm `with view functions`
 
@@ -441,8 +451,12 @@ class ArticleForm(forms.ModelForm):
   - 사용자로부터 받는 데이터가 `DB와 연관되어 있는 경우` 사용
 
   - 데이터의 유효성 검사가 끝나면 데이터를 각각 어떤 레코드에 맵핑해야 할지 이미 알고 있기 때문에 곧바로 save() 호출이 가능
+  
+    
 
 ---
+
+
 
 # 주의
 
@@ -450,7 +464,11 @@ class ArticleForm(forms.ModelForm):
 
 - 처음부터 고려하려고 하지마
 
+  
+
 ---
+
+
 
 ## 7. Widgets 활용
 
@@ -502,6 +520,8 @@ class ArticleForm(forms.ModelForm):
      ```
 
 - form을 통해 자율성이 많이 떨어졌으나, django에서 추가적인 기능을 지원해줌(나중에 할꺼)
+
+
 
 ## 8. Handling HTTP requests
 
@@ -602,7 +622,7 @@ def update(request, pk):
 
 
 
-##  8. view decorators
+##  9. view decorators
 
 ### Allowed HTTP methods
 
@@ -725,3 +745,156 @@ def update(request, pk):
   ```
 
   
+
+## 10. Rendering fields manually
+
+### 개요
+
+- modelform을 사용하면 `{{form.as_p}}` form을 작성할 때 유연함이 제한된다.
+
+  => form을 수동으로 만들어 줘서 form에 유연함을 부여
+
+### form 작성
+
+- 수동으로 form 작성
+
+  ```html
+  <!-- create.html -->
+  
+    <form action="#">
+      <div>
+        {{form.title.errors}}
+        {{form.title.label_tag}}
+        {{form.title}}
+      </div>
+      <div>
+        {{form.content.errors}}
+        {{form.content.label_tag}}
+        {{form.content}}
+      </div>
+    </form>
+  
+  
+  ```
+
+- for문을 이용하여 form 작성
+
+  ```html
+  <!-- create.html -->
+    <h2>Looping over the form's fields</h2>
+    <form action="#">
+      {% for field in form %}
+        {{field.errors}}
+        {{field.label_tag}}
+        {{field}}
+      {% endfor %}
+    </form>
+  ```
+
+- 부트스트랩 이용
+
+  - 부트스트랩에서 form-control만 가져와서 `forms.py` => `widget` => `attrs` => `'class' : my-title form-control'` 넣기
+    - class 는 공백기준으로 나눠지기 때문에 my-title 뒤에 ` ` + `form-control` 만 적어주자
+
+  ```python
+  class ArticleForm(forms.ModelForm):
+      title =forms.CharField(
+          label='제목',
+          widget=forms.TextInput(
+              attrs={
+                  'class' : 'my-title form-control', #################여기
+                  'placeholder' : 'Enter the title',       
+                  'maxlength' : 10,                        
+              }                                            
+          )
+      )
+  
+      content = forms.CharField(
+          label='내용',
+          widget= forms.Textarea(
+              attrs={
+                  'class' : 'my-content form-control' ,###################여기
+                  'placeholder' : 'Enter the content',
+                  'rows' : 5,
+                  'cols':50,                
+              }
+          ),
+          error_messages={
+              'required' : 'Please enter your content',
+          }
+      )
+  
+      class Meta:
+          model = Article
+          fields = '__all__'
+          # exclude = ('title')class ArticleForm(forms.ModelForm):
+  
+  ```
+
+  ```html
+  <!-- base.html -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-----------------------여기 부트스트랩 적용--------------------------------->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  <!-----------------------여기 부트스트랩 적용--------------------------------->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+  </html>
+  
+  ```
+
+  - 그냥 겁나 예뻐짐
+
+- 외부 라이브러리 이용
+
+  - `Django bootstrap 5` => `insallation`  : 설치방법
+
+    - `pip install django-bootstrap-v5`
+    - `settings.py` 에 `bootstrap5` 등록
+    - `pip freeze > requirements.txt`
+
+  - `Quickstart`에 사용법 나와있음
+
+    ```html
+    <!-- create.html -->	
+    
+      <h2>bootstrap v5 라이브러리 사용하기</h2>
+      <form action="#">
+        {% bootstrap_form form %}
+      </form>
+      {% endblock content %}
+    <!-- 더 간단 ㅎㄷㄷ -->
+    ```
+
+  - button 만들기
+
+    ```html
+    <!-- create.html -->	
+      <h2>bootstrap v5 라이브러리 사용하기</h2>
+      <form action="#">
+        {% bootstrap_form form %}
+          
+        {% buttons %}
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+      	{% endbuttons %}
+          
+      </form>
+      {% endblock content %}
+    ```
+
+    - 이것도 마찬가지로 유연성에 제한이 된다. 정해진 틀 안에서만 가능
+
