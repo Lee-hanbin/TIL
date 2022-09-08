@@ -8,12 +8,25 @@
 </head>
 <body>
   <div class="container">
-    <h3>{{ user }}</h3>
-    <a href="{% url 'accounts:login' %}">Login</a>
-    <form action="{% url 'accounts:logout' %}" method="POST">
-      <input type="submit" value= "Logout">
-    </form>
-    <a href="{% url 'accounts:signup' %}">Signup</a>
+    <!------------------ 로그인 했을 때 보여주기---------------->
+    {% if request.user.is_authenticated %}
+      <h3>{{ user }}</h3>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value= "Logout">
+      </form>
+      <form action="{% url 'accounts:delete' %}"method="POST">
+        {% csrf_token %}
+        <input type="submit" value="회원탈퇴">
+      </form> 
+      <a href="{% url 'accounts:update' %}">회원정보수정</a>
+
+    <!------------------ 로그인 하지 않았을 때 보여주기---------------->    
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Login</a>
+      <a href="{% url 'accounts:signup' %}">Signup</a>
+  
+    {% endif %}
     <hr>
     {% block content %}
     {% endblock content %}
