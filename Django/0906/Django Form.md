@@ -15,16 +15,16 @@
 
 ## 2. 역할
 
-- Form은 Django의 유효성 검사 도구 중 하나로 외부의 악의적 공격 및 데이터 손상에 대한 중요 방어수단
+- `Form`은 `Django의 유효성 검사 도구` 중 하나로 외부의 악의적 공격 및 데이터 손상에 대한 `중요 방어수단`
 - 유효성 검사를 `단순화하고 자동화` 할 수 있는 기능을 제공하며, 개발저가 직접 작성하는 코드보다 더 안전하고 빠르게 수행 하는 코드 작성 가능
-  - 개발자가 필요한 핵심 부분만 집중할 수 있도록 돕는 프레임워크의 특성을 갖음
+  - 개발자가 `필요한 핵심 부분만 집중`할 수 있도록 `돕는` `프레임워크`의 `특성`을 갖음
 
 
 
 ## 3. 처리
 
-- 렌더링을 위한 데이터 준비 및 재구성
-- 데이터에 대한 HTML forms 생성
+- 렌더링을 위한 `데이터 준비 및 재구성`
+- 데이터에 대한 `HTML forms` 생성
 - 클라이언트로부터 받은 데이터 수신 및 처리
 
 
@@ -41,12 +41,13 @@
 ### 선언
 
 - `기본셋팅`
+  
   - 가상환경
   - `django==3.2.13` 설치
   - `django-extension` 설치
   - `pip freeze > requirements`
   - `python manage.py migrate`
-
+  
 - 앱 폴더에 forms.py를 생성 후 ArticleForm Class 선언
 
   ```python
@@ -116,16 +117,15 @@
     2. `form fields`와 `widgets`의 차이
 
        - `Form fields` 
-
          - 입력에 대한 유효성 검사 로직을 처리 
-
+         
          - 템플릿에서 직접 사용
-
+         
        - `widgets` 
          - 웹 페이지의 HTML input 요소 렌더링 담당 
            - 단순 출력 부분만 담당
          - widgets은 반드시 form fields에 할당 됨
-
+       
        ```python
        #articles/forms.py
        
@@ -324,7 +324,7 @@ class ArticleForm(forms.ModelForm):
     - `제공되지 않은 경우` save()는 지정된 모델의 새 인스턴스를 만듦(`create`)
     - `제공되면` save()는 해당 인스턴스를 수정(`update`)
 
-- form 인스턴스의 errors 속성
+- `form 인스턴스의 errors 속성`
 
   - is_valid()의 반환 값이 `False`인 경우 form 인스턴스의 `error 속성에 값이 작성`
 
@@ -438,7 +438,7 @@ class ArticleForm(forms.ModelForm):
 
 - ModelForm이 Form보다 더 좋은 것이 아니라 각자 역할이 다른 것
 
-- Form
+- #### `Form` ####
 
   - 사용자로부터 받는 데이터가 `DB와 연관되어 있지 않는 경우`에 사용
 
@@ -446,7 +446,7 @@ class ArticleForm(forms.ModelForm):
 
     ex) 로그인, 사용자의 데이터를 받아 인증 과정에서만 사용
 
-- ModelForm
+- #### `ModelForm` ####
 
   - 사용자로부터 받는 데이터가 `DB와 연관되어 있는 경우` 사용
 
@@ -460,7 +460,7 @@ class ArticleForm(forms.ModelForm):
 
 # 주의
 
-- Widgetsr과 decorator는 우선순위가 낮으므로 실습때는 가장 마지막에 고려
+- `Widgetsr`과 `decorator`는 우선순위가 낮으므로 실습때는 가장 마지막에 고려
 
 - 처음부터 고려하려고 하지마
 
