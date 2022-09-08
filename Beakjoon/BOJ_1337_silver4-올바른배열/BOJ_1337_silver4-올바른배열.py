@@ -8,18 +8,12 @@ lst = [0]*N
 for i in range(N):
     lst[i] =int(input())
 lst.sort()
-lst.append(-1)
-temp = 0
-cnt = 0
+
 for i in range(N):
-    if temp == 0:
-        temp = 1
-        continue
-    if lst[i+1] == lst[i] + 1:
-        temp += 1
+    for j in range(5):
+
     else:
-        if cnt < temp:
-            cnt = temp
-        temp = 0
+        break
+
 
 print(5 - cnt)
