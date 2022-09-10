@@ -25,19 +25,25 @@ N층 b호에 살고 싶으면 (N-1)층의 1호 ~ b호의 사람 수 만큼 필�
 
 => list에 담아서 순서대로?
 
-'''
 
-def cnt(N):
+def f(lst, ho):                 # 이 전층의 인원들이 담긴 리스트를 받아서
+    lst2 = []                   # 다음층의 인원들이 담긴 리스트를 출력
+    for i in range(1, ho+1):
+        sol = 0
+        for j in range(i):
+            sol += lst[j]
+        lst2.append(sol)
+    return lst2
 
 for _ in range(int(input())):
     floor = int(input())
     ho = int(input())
     lst = []
+    for i in range(1, ho+1):    # 0층의 인원만 미리 선정
+        lst.append(i)
+
     while floor > 0:
-        
-        for i in range(1, ho+1):
-            lst.append(i)
-
-
-
+        lst = f(lst, ho)
+        floor -= 1
+    print(lst[ho-1])            #해당 층의 호수 뽑기
 
