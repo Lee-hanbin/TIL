@@ -38,7 +38,7 @@ for i in range(1, len(array)):
         if array[j] < array[j-1]
             array[j], array[j-1] = array[j-1], array[j]
         else:
-        break
+            break
 
 @삽입정렬의 시간 복잡도
  - 삽입 정렬의 시간 복잡도는 O(N^2)
@@ -93,6 +93,6 @@ ex)
 @퀵 정렬의 시간 복잡도
  - 퀵 정렬의 시간 복잡도는 O(nlogn)
 
-@계수 정렬
+@계수 정렬(count 정렬)
  - 특정한 조건이 부합할 때,
 '''
