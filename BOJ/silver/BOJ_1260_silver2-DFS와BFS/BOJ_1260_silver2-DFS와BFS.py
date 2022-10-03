@@ -11,13 +11,7 @@ for _ in range(M):
     graph[e].append(s)
 for i in graph:
     graph[i].sort()
-visited_dfs = [root]
-def dfs(root):
-    for node in graph[root]:
-        if node not in visited_dfs:
-            visited_dfs.append(node)
-            dfs(node)
-    return visited_dfs
+c
 
 # visited_bfs = set()
 visited_bfs = list()
