@@ -93,7 +93,7 @@ pip install -r requirements.txt
 - Commnet 모델 정의
   
     ```python
-    class comment(models.Model):
+    class Comment(models.Model):
         article = models.ForeignKey(Article, on_delete=models.CASCADE)
         content = models.TextField()
         created_at = models.DateTimeField(auto_now_add=True)
@@ -233,8 +233,8 @@ N -> 1을 참조하지만, 1 -> N을 참조하지 않음
 - Article 모델이 Comment 모델을 참조(`역참조`)할 때 사용하는 매니저
 - `article.comment` 형식으로는 댓글 객체를 참조 할 수 없음
     - 실제로 Article 클래스에는 Comment와의 어떠한 관계도 작성되어 있지 않음
-- 대시 Django가 역참조 할 수 있는 `comment_set` manager를 자동으로 생성해 `article.comment_set` 형태로 댓글 객체를 참조할 수 있음
-- 반면 참조 상황에서는 실제 ForeignKey 클래스로 작성한 인스턴스가 Comment 클래스의 클래스 변수이기 때문에 `comment.article` 형태로 작성 가능
+- 대신 Django가 역참조 할 수 있는 `comment_set` manager를 자동으로 생성해 `article.comment_set` 형태로 댓글 객체를 참조할 수 있음
+- 반면, 참조 상황에서는 실제 ForeignKey 클래스로 작성한 인스턴스가 Comment 클래스의 클래스 변수이기 때문에 `comment.article` 형태로 작성 가능
 
 ### Ralated manager 실습
 
@@ -273,7 +273,7 @@ N -> 1을 참조하지만, 1 -> N을 참조하지 않음
     ```python
     comments = article.comment_set.all()
     for comment in comments:
-    	print(comment.content
+    	print(comment.content)
               
     '''
     first comment
@@ -303,11 +303,17 @@ class Comment(models.Model):
 
 ### admin site 등록
 
+- admin 계정 생성
+
+  ```bash
+  $ python manage.py createsuperuser
+  ```
+
 - 새로 작성한 Comment 모델을 admin site에 등록
   
     ```python
     # article/admin.py
-    from .models import Article, commnet
+    from .models import Article, Commnet
     
     admin.site.register(Article)
     admin.site.register(Comment)
@@ -331,13 +337,13 @@ class Comment(models.Model):
   
     ```python
     # article/forms.py
-    from .model improt Article, Comment
+    from .models improt Article, Comment
     
     class CommentForm(forms.ModelForm):
     		
-    		class Meta:
-    			model = Comment
-    			fields = '__all__`
+    	class Meta:
+    		model = Comment
+    		fields = '__all__`
     ```
     
 - detail 페이지에서 CommentForm 출력 (`view 함수`)
@@ -467,6 +473,7 @@ class Comment(models.Model):
 - save 메서드의 commit 옵션을 사용해 DB에 저장되기 전 article 객체 저장하기
   
     ```python
+    # articles/views
     '''
     따라서 save의 메서드인 commit을 사용한다
     commit은 default값으로 True를 가지고 있다
@@ -478,9 +485,9 @@ class Comment(models.Model):
         article = Article.objects.get(pk=pk)
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            comment = comment_form.save(commit =False) # False
-    				comment.article = article                  # 추가
-    				comment.save()                             # save
+    		comment = comment_form.save(commit =False) # False
+    		comment.article = article                  # 추가
+    		comment.save()                             # save
         return redirect('articles:detail', article.pk)
     ```
     
