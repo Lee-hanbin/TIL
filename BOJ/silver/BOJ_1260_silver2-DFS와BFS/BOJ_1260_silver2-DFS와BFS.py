@@ -11,6 +11,7 @@ for _ in range(M):
     graph[e].append(s)
 for i in graph:
     graph[i].sort()
+<<<<<<< HEAD
 visited_dfs = [root]
 def dfs(root):
     for node in graph[root]:
@@ -18,6 +19,9 @@ def dfs(root):
             visited_dfs.append(node)
             dfs(node)
     return visited_dfs
+=======
+c
+>>>>>>> dd450b790df1b48e224e9a4c04e5571b8b916b85
 
 # visited_bfs = set()
 visited_bfs = list()
