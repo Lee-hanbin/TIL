@@ -3,44 +3,37 @@
 from collections import defaultdict, deque
 from pprint import pprint
 
-def bfs(start):
+def bfs(root):
     que = deque()
-    que.append(station[start][0])
+    if root == final:
+        lst_sol.append(0)
+        return
+    for i in dict1[root]:
+        que.append((i, 0))
     visited = set()
-    visited.add(start)
     while que:
-        v, hosun, trans = que.popleft()
+        v, cnt = que.popleft()
         visited.add(v)
-        if v == T:
-            sol.append(trans)
-        for i in station[v]:
-            if i[0] not in visited:
-                if i[1] != hosun:
-                    trans += 1
-                que.append((i[0], i[1], trans))
-    if not sol:
-        sol.append(-1)
-    return sol
-
-N = int(input())
-station = defaultdict(list)
-ho = defaultdict(list)
-sol = []
-
-for i in range(1, N+1):
-    tmp_lst = list(map(int,input().split()))
-    ho[i] = tmp_lst[1:]
-    for j, e in enumerate(tmp_lst):
-        if j == 0:
-            continue
-        elif j == 1 and len(tmp_lst) > 2:
-            station[tmp_lst[j]].append((tmp_lst[j+1],i,0))
-        elif j == len(tmp_lst)-1:
-            station[tmp_lst[j]].append((tmp_lst[j-1],i,0))
-        else:
-            station[tmp_lst[j]].append((tmp_lst[j-1],i,0))
-            station[tmp_lst[j]].append((tmp_lst[j+1],i,0))
-chk = 0
-T = int(input())
-
-print(min(bfs(0)))
+        if v[1] == final:
+            lst_sol.append(cnt)
+        for i in dict1[v[1]]:
+            if i not in visited:
+                if v[0] != i[0]:
+                    que.append((i,cnt+1))
+                else:
+                    que.append((i,cnt))
+dict1 = defaultdict(list)
+n = int(input())
+lst_sol = []
+for i in range(1,n+1):
+    dict1[i] = []
+for i in range(1,n+1):
+    cnt, *station = map(int, input().split())
+    for j in range(len(station)-1):
+        dict1[station[j]].append((i,station[j+1]))
+final = int(input())
+bfs(0)
+if len(lst_sol) == 0:
+    print(-1)
+else:
+    print(min(lst_sol))
