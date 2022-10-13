@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_POST
+from django.contrib.auth import get_user_model
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
@@ -98,3 +99,33 @@ def change_password(request):
         'form': form,
     }
     return render(request, 'accounts/change_password.html', context)
+
+
+def profile(request, username):
+    # User를 get_user_model을 통해 직접 가져와
+    User = get_user_model()
+    person = User.objects.get(username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)
+
+def follow(request, user_pk):
+    # 인증된 사용자면
+    if request.user.is_authenticated:
+        User = get_user_model()
+        me = request.user
+        you = User.objects.get(pk=user_pk)
+        # 나 자신을 팔로우 하면 안된다이!!
+        if me != you:
+            # 현재 내가(request.user) 그 사람의 팔로워 목록에 있다면
+            if me in you.followers.all():
+            # exists 이용도 가능
+            # if you.followers.filter(pk=me.pk).exists():
+                # 언팔로우
+                you.followers.remove(me)
+            else:
+                # 팔로우
+                you.followers.add(me)
+        return redirect('accounts:profile', you.username)
+    return redirect('accounts:login')

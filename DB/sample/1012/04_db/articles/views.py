@@ -1,10 +1,10 @@
+from tkinter import E
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
 # from django.http import HttpResponse, HttpResponseForbidden
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
-
 
 # Create your views here.
 @require_safe
@@ -109,3 +109,26 @@ def comments_delete(request, article_pk, comment_pk):
         if request.user == comment.user:
             comment.delete()
     return redirect('articles:detail', article_pk)
+
+@require_POST
+def likes(request, article_pk):
+    # 인증된 사용자면
+    if request.user.is_authenticated:
+        article = Article.objects.get(pk=article_pk)
+        # 좋아요 추가 및 취소를 무슨 기준으로 조건(if)를 작성할까?
+        # 현재 게시글에 좋아요를 누른 유저 목록에 / 현재 좋아요를 요청하는 유저 여부
+        # if request.user in article.like_users.all():    #이미 과거에 좋아요를 눌렀음
+        
+        # 현재 게시글에 좋아요를 누른 유저 중에 / 현재 좋아요를 요청하는 유저를 검색해서 존재하는 지 확인
+        # get 대신 filter를 이용하는 이유는 get은 없으면 오류를 반환
+        if article.like_users.filter(pk=request.user.pk).exists(): 
+            # 좋아요 취소 (remove)
+            article.like_users.remove(request.user)
+        else:
+            # 좋아요 추가 (add)
+            article.like_users.add(request.user)    # 게시글에 현재 '좋아요' 할 유저와 관계를 추가
+        return redirect('articles:index')
+    return redirect('accounts:login')
+
+    # 싫어요 추가 (add)
+    # 싫어요 취소 (remove)
