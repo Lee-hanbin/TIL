@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>index</h1>
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'movies:create' %}">CREATE</a>
+  {% endif %}
+{% endblock content %}
