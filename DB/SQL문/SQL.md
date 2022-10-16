@@ -171,11 +171,6 @@ CREATE TABLE table_name (
 ### 종류
 
 1. NULL
-2. INTEGER
-3. REAL
-4. TEXT
-5. BLOB
-6. NULL
 - NULL value
 - 정보가 없거나 알 수 없음을 의미
 - `값이 따옴표 없이 NULL임`
@@ -187,10 +182,10 @@ CREATE TABLE table_name (
 - 실수
 - 8바이트 부동 소수점을 사용하는 10진수 값이 있는 실수
 - `값에 따옴표나 소수점, 지수가 없음`
-4. TEXT
+4 TEXT
 - 문자 데이터
 - `값이 작은 따옴표나 큰따옴표로 묶임`
-5. BLOB(Binary Large Object)
+5 BLOB(Binary Large Object)
 - 입력된 그대로 저장된 데이터 덩어리(대용 타입 없음)
 - 바이너리 등 멀티미디어 파일
 - ex) 이미지 데이터
