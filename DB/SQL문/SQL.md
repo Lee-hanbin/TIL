@@ -34,7 +34,7 @@
 
 ### 개요
 
-- Realational Database
+- Relational Database
 - 데이터를 테이블, 행, 열 등으로 나누어 구조화 하는 방식
 - 자료를 여러 테이블로 나누어서 관리하고, 이 테이블간 관계를 설정해 여러 데이터를 쉽게 조작할 수 있다는 장점이 있음
 - SQL을 사용하여 데이터를 조회하고 조작
@@ -60,7 +60,7 @@
 - `SQLite 사용`
   - 응용 프로그램에 파일 형식으로 넣어 사용하는 비교적 가벼운 데이터베이스에 사용
   - 대규모 동시 처리 작업에는 적합하지 않음
-  - 다른 RDMBS에서 지원하는 SQL 기능을 지원하지 않을 수 있음
+  - 다른 RDBMS에서 지원하는 SQL 기능을 지원하지 않을 수 있음
 
 # SQL
 
@@ -171,26 +171,25 @@ CREATE TABLE table_name (
 ### 종류
 
 1. NULL
-2. INTEGER
-3. REAL
-4. TEXT
-5. BLOB
-6. NULL
 - NULL value
 - 정보가 없거나 알 수 없음을 의미
 - `값이 따옴표 없이 NULL임`
+
 2. INTEGER
 - 정수
 - 크기에 따라 0, 1, 2, 3, 4, 6, 8 바이트와 같은 가변 크기를 가짐
 - `값에 둘러싸는 따옴표와 소수점 또는 지수가 없을 때`
+
 3. REAL
 - 실수
 - 8바이트 부동 소수점을 사용하는 10진수 값이 있는 실수
 - `값에 따옴표나 소수점, 지수가 없음`
-4. TEXT
+
+4 TEXT
 - 문자 데이터
 - `값이 작은 따옴표나 큰따옴표로 묶임`
-5. BLOB(Binary Large Object)
+
+5 BLOB(Binary Large Object)
 - 입력된 그대로 저장된 데이터 덩어리(대용 타입 없음)
 - 바이너리 등 멀티미디어 파일
 - ex) 이미지 데이터
@@ -1070,10 +1069,10 @@ CREATE TABLE classmates (
   
   INSERT INTO classmates 
   VALUES ('이한빈', 30, '서울'),
-               ('김효미', 28, '건입'),
-               ('정유정', 27, '인천'),
-               ('김경림', 27, '구디'),
-               ('이창준', 30, '강남');
+         ('김효미', 28, '건입'),
+         ('정유정', 27, '인천'),
+         ('김경림', 27, '구디'),
+         ('이창준', 30, '강남');
   ```
 
 ### `UPDATE` statement
@@ -1103,7 +1102,7 @@ CREATE TABLE classmates (
   
   UPDATE classmates
   SET name = '김철수한무두루미',
-          address = '제주도'
+      address = '제주도'
   WHERE rowid = 2;
   ```
 
