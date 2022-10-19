@@ -1,5 +1,0 @@
-
-
-![52036EEA-7C0B-439D-B962-0E7BD21355CA.jpeg](README_assets/03e8a10ca6cfb68650d23fe954f2cf187cdbc976.jpeg)
-
-

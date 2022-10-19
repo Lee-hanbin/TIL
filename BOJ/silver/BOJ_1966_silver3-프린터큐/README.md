@@ -1,3 +1,0 @@
-![1AD42036-A21A-4C93-A7C4-F5DC09921331.jpeg](README_assets/ceb7cdee2da38579699f8ab1d0a01aa2ff60843e.jpeg)
-
-

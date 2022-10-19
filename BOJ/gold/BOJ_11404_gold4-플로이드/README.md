@@ -1,3 +1,0 @@
-![515B04CF-D9BA-41F2-B7DE-2986F2EE00BA.jpeg](README_assets/d1df1a56b761d6e3822aec6482dbf2d8860fcecb.jpeg)
-
-
