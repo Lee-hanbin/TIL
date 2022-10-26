@@ -68,20 +68,23 @@ ADDIJJJKKLSS20
 '''
 
 # s = list(input().strip())   # 문자열읜 sort 메서드 사용 불가
+# s = input().strip()
+# s = sorted(s)                 # 문자열은 sorted만 가능 sort 메서드는 리스트의 메서드!! => sorted로 해도 sort로 받음
+# sol = 0
+# chk = ''
+# for i,e in enumerate(s):
+#     if e.isdigit():
+#         sol += int(e)
+#     else:
+#         chk += e
+# s = chk
+# print(f'{s}{sol}')
 
-
-s = input().strip()
-s = sorted(s)                 # 문자열은 sorted만 가능 sort 메서드는 리스트의 메서드!! => sorted로 해도 sort로 받음
-sol = 0
-chk = ''
-for i,e in enumerate(s):
-    if e.isdigit():
-        sol += int(e)
-    else:
-        chk += e
-s = chk
-print(f'{s}{sol}')
-
+'''
+@리뷰
+1. .sort 메서드는 리스트를 위한 메서드이기 떄문에 문자열에 사용 불가
+2. sorted 함수를 사용하면 list => sort 하여 list로 생성되어 정렬됨 
+'''
 
 '''
 #9. 문자열 압축
@@ -120,3 +123,91 @@ xababcdcdababcdcd               17
 #         lst.append(len(s2))
 #
 # print(min(lst))
+
+'''
+#9. 자물쇠와 열쇠
+@문제
+특이한 형태의 열쇠와 자물쇠를 푸는 방법에 대해 다음과 같이 설명해주는 종이가 발견
+자물쇠는 격자 한 칸의 크기가 1 x 1 인 N x N 크기의 정사각 격자 형태
+열쇠는 M x M 크기인 정사각 격자 형태로 되어 있음
+자물쇠는 홈이 파여 있고
+열쇠는 홈 및 돌기가 존재
+열쇠의 돌기 부분이 자물쇠의 홈에 맞으면 자물쇠가 열림 (열쇠는 회전이동 가능)
+열 수 있으면 true
+열 수 없으면 false
+
+'''
+
+def search(lst, lock, chk_lst, N, M):
+    # 중간에 답을 만나면 멈추게 해주게 하기 위해 함수로 정의
+    def pp():
+        # 키의 우측하단이 자물쇠의 좌측상단에 맞을 때부터
+        # 키의 좌측상단이 자물쇠의 우측하단에 맞을 때까지 반복
+        for i in range((M-1)+N):
+            for j in range((M-1)+N):
+                # 먼저 홈이 다 맞는 지 확인하는 함수
+                def chk(i, j):
+                    # 미리 구해둔 자물쇠의 홈과 키의 돌기가 맞는 지 확인
+                    for pair in chk_lst:
+                        r, c = pair
+                        # r이 키의 틀 안에 있고 해당 위치의 키가 돌기이면 계속 진행
+                        if i <= r <= i+M-1 and j<= c <= j+M-1 and lst[r-i][c-j] == 1:
+                            continue
+                        else:                   # 그렇지 않으면 답일 확률 x => False
+                            return False
+                    else:                       # 모든 자물쇠의 홈과 키의 돌기가 맞으면 True
+                        return True
+                # 홈이 다 맞은 경우, 키의 돌기와 자물쇠의 돌기가 맞닿는 경우를 체크
+                if chk(i,j) == True:
+                    def chk2(i,j):
+                        for r2 in range(M-1,M+N-1):
+                            for c2 in range(M-1,M+N-1):
+                                if i <= r2 <= i+M-1 and j<= c2 <= j+M-1:
+                                    if lst[r2-i][c2-j] == 1 and lock[r2-(M-1)][c2-(M-1)] == 1:
+                                        return False
+                        # 다른 하자가 없으면 True
+                        else:
+                            return True
+                    if chk2(i,j) == True:
+                        return True
+        # 끝까지 돌려도 답이 안나오면 False
+        else:
+            return False
+    return pp()
+
+def solution(key, lock):
+    N = len(lock)
+    M = len(key)
+    ans = False
+    chk_lst = []
+    # 자물쇠를 체그하여 홈이 있는 좌표를 리스트에 담는다.
+    for i in range(N):
+        for j in range(N):
+            if lock[i][j] == 0:
+                chk_lst.append((i+(M-1),j+(M-1)))
+    # 90도씩 돌리면서 확인
+    for i in range(4):
+        # 만약 열쇠가 맞으면 True 반환하고 멈추기
+        if search(key, lock, chk_lst, N, M):
+            ans = True
+            break
+        # 만약 열쇠가 맞지 않으면 90도 돌리고 더 해보기
+        else:
+            key = list(zip(*key[::-1]))
+
+    return ans
+
+k_n = int(input())
+l_n = int(input())
+k_lst = [list(map(int, input().split())) for _ in range(k_n)]
+l_lst = [list(map(int, input().split())) for _ in range(l_n)]
+
+solution(k_lst,l_lst)
+
+'''
+@리뷰
+1. 처음 시작할 때는 풀이가 눈에 보인다고 생각했으나, 생각보다 구현에 오랜시간이 걸렸다.
+2. 풀이가 길어지다보니 사소한 실수들이 발목을 계속 잡았다.
+3. 이제 웬만한 배열문제는 잘 풀 수 있지 않을까..?
+4. 
+'''
