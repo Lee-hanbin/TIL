@@ -43,6 +43,46 @@ LUCKY
 => for문을 2개 돌리면 그래봤자 O(n) 인데, for문이 돌아갈때마다 연산이 들어가면 O(n^2)이 되지 않을까?
 '''
 
+
+'''
+#8 문자열 재정렬 
+@문제
+알파벳 대문자와 숫자(0~9)로만 구성된 문자열이 입력으로 주짐
+이때 모든 알파벳을 오름차순으로 정렬하여 이어서 출력한 뒤, 모든 숫자를 더한 값을 이어서 출력
+
+@입력조건
+첫째 줄: 문자열 S가 주어짐 ( 1 ~ 10000) 
+
+@input1
+K1KA5CB7
+
+@input2
+AJDLSI412K4JSJ9D
+
+@output1
+ABCKK13
+
+@output2
+ADDIJJJKKLSS20
+
+'''
+
+# s = list(input().strip())   # 문자열읜 sort 메서드 사용 불가
+
+
+s = input().strip()
+s = sorted(s)                 # 문자열은 sorted만 가능 sort 메서드는 리스트의 메서드!! => sorted로 해도 sort로 받음
+sol = 0
+chk = ''
+for i,e in enumerate(s):
+    if e.isdigit():
+        sol += int(e)
+    else:
+        chk += e
+s = chk
+print(f'{s}{sol}')
+
+
 '''
 #9. 문자열 압축
 @문제
