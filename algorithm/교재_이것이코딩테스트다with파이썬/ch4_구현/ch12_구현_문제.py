@@ -125,7 +125,7 @@ xababcdcdababcdcd               17
 # print(min(lst))
 
 '''
-#9. 자물쇠와 열쇠
+#10. 자물쇠와 열쇠
 @문제
 특이한 형태의 열쇠와 자물쇠를 푸는 방법에 대해 다음과 같이 설명해주는 종이가 발견
 자물쇠는 격자 한 칸의 크기가 1 x 1 인 N x N 크기의 정사각 격자 형태
@@ -138,76 +138,118 @@ xababcdcdababcdcd               17
 
 '''
 
-def search(lst, lock, chk_lst, N, M):
-    # 중간에 답을 만나면 멈추게 해주게 하기 위해 함수로 정의
-    def pp():
-        # 키의 우측하단이 자물쇠의 좌측상단에 맞을 때부터
-        # 키의 좌측상단이 자물쇠의 우측하단에 맞을 때까지 반복
-        for i in range((M-1)+N):
-            for j in range((M-1)+N):
-                # 먼저 홈이 다 맞는 지 확인하는 함수
-                def chk(i, j):
-                    # 미리 구해둔 자물쇠의 홈과 키의 돌기가 맞는 지 확인
-                    for pair in chk_lst:
-                        r, c = pair
-                        # r이 키의 틀 안에 있고 해당 위치의 키가 돌기이면 계속 진행
-                        if i <= r <= i+M-1 and j<= c <= j+M-1 and lst[r-i][c-j] == 1:
-                            continue
-                        else:                   # 그렇지 않으면 답일 확률 x => False
-                            return False
-                    else:                       # 모든 자물쇠의 홈과 키의 돌기가 맞으면 True
-                        return True
-                # 홈이 다 맞은 경우, 키의 돌기와 자물쇠의 돌기가 맞닿는 경우를 체크
-                if chk(i,j) == True:
-                    def chk2(i,j):
-                        for r2 in range(M-1,M+N-1):
-                            for c2 in range(M-1,M+N-1):
-                                if i <= r2 <= i+M-1 and j<= c2 <= j+M-1:
-                                    if lst[r2-i][c2-j] == 1 and lock[r2-(M-1)][c2-(M-1)] == 1:
-                                        return False
-                        # 다른 하자가 없으면 True
-                        else:
-                            return True
-                    if chk2(i,j) == True:
-                        return True
-        # 끝까지 돌려도 답이 안나오면 False
-        else:
-            return False
-    return pp()
-
-def solution(key, lock):
-    N = len(lock)
-    M = len(key)
-    ans = False
-    chk_lst = []
-    # 자물쇠를 체그하여 홈이 있는 좌표를 리스트에 담는다.
-    for i in range(N):
-        for j in range(N):
-            if lock[i][j] == 0:
-                chk_lst.append((i+(M-1),j+(M-1)))
-    # 90도씩 돌리면서 확인
-    for i in range(4):
-        # 만약 열쇠가 맞으면 True 반환하고 멈추기
-        if search(key, lock, chk_lst, N, M):
-            ans = True
-            break
-        # 만약 열쇠가 맞지 않으면 90도 돌리고 더 해보기
-        else:
-            key = list(zip(*key[::-1]))
-
-    return ans
-
-k_n = int(input())
-l_n = int(input())
-k_lst = [list(map(int, input().split())) for _ in range(k_n)]
-l_lst = [list(map(int, input().split())) for _ in range(l_n)]
-
-solution(k_lst,l_lst)
+# def search(lst, lock, chk_lst, N, M):
+#     # 중간에 답을 만나면 멈추게 해주게 하기 위해 함수로 정의
+#     def pp():
+#         # 키의 우측하단이 자물쇠의 좌측상단에 맞을 때부터
+#         # 키의 좌측상단이 자물쇠의 우측하단에 맞을 때까지 반복
+#         for i in range((M-1)+N):
+#             for j in range((M-1)+N):
+#                 # 먼저 홈이 다 맞는 지 확인하는 함수
+#                 def chk(i, j):
+#                     # 미리 구해둔 자물쇠의 홈과 키의 돌기가 맞는 지 확인
+#                     for pair in chk_lst:
+#                         r, c = pair
+#                         # r이 키의 틀 안에 있고 해당 위치의 키가 돌기이면 계속 진행
+#                         if i <= r <= i+M-1 and j<= c <= j+M-1 and lst[r-i][c-j] == 1:
+#                             continue
+#                         else:                   # 그렇지 않으면 답일 확률 x => False
+#                             return False
+#                     else:                       # 모든 자물쇠의 홈과 키의 돌기가 맞으면 True
+#                         return True
+#                 # 홈이 다 맞은 경우, 키의 돌기와 자물쇠의 돌기가 맞닿는 경우를 체크
+#                 if chk(i,j) == True:
+#                     def chk2(i,j):
+#                         for r2 in range(M-1,M+N-1):
+#                             for c2 in range(M-1,M+N-1):
+#                                 if i <= r2 <= i+M-1 and j<= c2 <= j+M-1:
+#                                     if lst[r2-i][c2-j] == 1 and lock[r2-(M-1)][c2-(M-1)] == 1:
+#                                         return False
+#                         # 다른 하자가 없으면 True
+#                         else:
+#                             return True
+#                     if chk2(i,j) == True:
+#                         return True
+#         # 끝까지 돌려도 답이 안나오면 False
+#         else:
+#             return False
+#     return pp()
+#
+# def solution(key, lock):
+#     N = len(lock)
+#     M = len(key)
+#     ans = False
+#     chk_lst = []
+#     # 자물쇠를 체그하여 홈이 있는 좌표를 리스트에 담는다.
+#     for i in range(N):
+#         for j in range(N):
+#             if lock[i][j] == 0:
+#                 chk_lst.append((i+(M-1),j+(M-1)))
+#     # 90도씩 돌리면서 확인
+#     for i in range(4):
+#         # 만약 열쇠가 맞으면 True 반환하고 멈추기
+#         if search(key, lock, chk_lst, N, M):
+#             ans = True
+#             break
+#         # 만약 열쇠가 맞지 않으면 90도 돌리고 더 해보기
+#         else:
+#             key = list(zip(*key[::-1]))
+#
+#     return ans
+#
+# k_n = int(input())
+# l_n = int(input())
+# k_lst = [list(map(int, input().split())) for _ in range(k_n)]
+# l_lst = [list(map(int, input().split())) for _ in range(l_n)]
+#
+# solution(k_lst,l_lst)
 
 '''
 @리뷰
 1. 처음 시작할 때는 풀이가 눈에 보인다고 생각했으나, 생각보다 구현에 오랜시간이 걸렸다.
 2. 풀이가 길어지다보니 사소한 실수들이 발목을 계속 잡았다.
 3. 이제 웬만한 배열문제는 잘 풀 수 있지 않을까..?
-4. 
 '''
+
+
+
+'''
+#12. 기둥과 보 설치
+빙하가 깨지면서 죠르디는 기둥과 보를 이용하여 벽면 구조물을 자동으로 세우는 로봇을 개발할 예정
+기둥 : 1. 바닥 위에 있거나 2. 보의 한쪽 끝부분 위에 있거나 3. 다른 기둥 위에 존재
+보 : 1. 한쪽 끝부분이 기둥 위에 있거나 2. 양쪽 끝부분이 다른 보와 동시에 연결 
+
+'''
+
+def solution(n, build_frame):
+    answer = [[]]
+    build_frame.sort(key=lambda x: (x[0], x[1]))
+    for i in range(n):
+        c, r, a, b = build_frame[i]
+        if len(answer) == 0:
+            if a == 0:
+                answer.append([c,r,a])
+        else:
+            if a == 1:          # 구조물이 보이면
+                if b == 1:      # 설치
+                    if answer[-1][2] == 0 and answer[-1][0] == c:
+                        answer.append([c,r,a])
+                    elif answer[-1][2] == 1 and answer[-1][1] == r:
+                        answer.append([c,r,a])
+                else:           # 삭제
+                    pass
+            else:               # 구조물이 기둥이면
+                if b == 1:      # 설치
+                    if r == 0:  # 바닥이면 
+                        answer.append([c,r,a])
+                    elif answer[-1][2] == 1 and answer[-1][1] == r:
+                        answer.append([c,r,a])
+                    elif answer[-1][2] == 0 and answer[-1][0] == c:
+                        answer.append([c,r,a])
+                else:           # 삭제
+                    pass
+            answer = answer[1:]
+    return answer
+
+lst = [[1,0,0,1],[1,1,1,1],[2,1,0,1],[2,2,1,1],[5,0,0,1],[5,1,0,1],[4,2,1,1],[3,2,1,1]]
+solution(5, lst)
