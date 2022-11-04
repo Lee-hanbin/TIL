@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <body style="text-align: center; max-width:500px; margin:4rem auto;border-style: outset;">
+    <div >
+      <div>
+        <h1 >회원가입</h1>
+        <hr>
+      </div>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3">
+      </form>
+      </style>
+    </div>
+  </body>
+{% endblock  %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{% url 'movies:recommended' %}" method="POST">
+  {% csrf_token %}
+  <select name="name" id="name">
+    <option selected hidden>==========</option>
+    {% for genre in genres %}
+      <option value="{{genre.name}}">{{genre.name}}</option>
+    {% endfor %}
+  </select>
+  <input type="submit">
+</form>
+
+{% if movies %}
+  {% for movie in movies %}
+    <div class="row">
+      {% for movie in movies %}
+        
+        <a class="col-3 mb-3" href="{% url 'movies:detail' movie.pk %}">
+          <div class="card bg-dark text-white" >
+            <img src="{{ movie.poster_path }}" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title bg-dark bg-opacity-50">{{ movie.title }}</h5>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  
+    <style>
+      .txt_post {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* 라인수 */
+        -webkit-box-orient: vertical;
+        word-wrap:break-word; 
+        line-height: 1.2em;
+        height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
+      }
+    </style>
+  {% endfor %}
+{% else %}
+<br>
+  <h3>보고 싶은 장르를 선택해주세요.</h3>
+{% endif %}
+
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+
+
+  
+</script>
+{% endblock script %}

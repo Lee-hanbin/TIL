@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Movies</h1>
+
+  <hr>
+  <div class="row">
+    {% for movie in movies %}
+      
+      <a class="col-4 mb-3" href="{% url 'movies:detail' movie.pk %}">
+        <div class="card bg-dark text-white" >
+          <img src="{{ movie.poster_path }}" class="card-img" alt="...">
+          <div class="card-img-overlay">
+            <h5 class="card-title bg-dark bg-opacity-50">{{ movie.title }}</h5>
+            <p class="card-text bg-dark txt_post bg-opacity-25 ">{{movie.overview}}</p>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+
+  <style>
+
+    .txt_post{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* 라인수 */
+      -webkit-box-orient: vertical;
+      word-wrap:break-word; 
+      line-height: 1.2em;
+      height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
+    }
+  </style>
+{% endblock %}
+
+

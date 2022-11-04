@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<button onclick="history.back()">
+  뒤로가기
+</button>
+<img
+class="modal__poster-img col-6"
+src={{ movie.poster_path }}
+alt="modal__poster-img"
+/>
+{% comment %} <div class="modal__content"> {% endcomment %}
+  <p class="modal__details ">
+    {% comment %} <span class="modal__user_perc">{score}% for you</span>{" "}
+    {release_date ? release_date : first_air_date} {% endcomment %}
+    <p>개봉일 : {{movie.release_date}}</p>
+    <p>관객수 : {{movie.popularity}}</p>
+    <p>장르 : {% for genre in genres %}{{genre.name}}{% endfor %}</p>
+  </p>
+
+  <h2 class="modal__title">{{movie.title}}</h2>
+  <p class="modal__overview"> 평점: {{movie.vote_average}}</p>
+  <p class="modal__overview"> {{movie.overview}}</p>
+{% comment %} </div> {% endcomment %}
+{% comment %}   
+    <div class="presentation">
+      <div class="wrapper-modal">
+        <div class="modal"> {% endcomment %}
+
+        {% comment %} </div>
+      </div>
+    </div> {% endcomment %}
+
+{% endblock %}
+
+
+
+{% comment %} 
+    class Movie(models.Model):
+    title = models.CharField(max_length=100)
+    release_date = models.DateField()
+    popularity = models.FloatField()
+    vote_count = models.IntegerField()
+    vote_average = models.FloatField()
+    overview = models.TextField()
+    poster_path = models.CharField(max_length=200)
+    genres = models.ManyToManyField(Genre) 
+{% endcomment %}
