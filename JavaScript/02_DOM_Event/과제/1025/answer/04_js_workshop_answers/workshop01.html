@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    Input: <input id="userInput" type="text" autofocus>
+  </div>
+  <div>
+    Output: <span id="output"></span>
+  </div>
+
+  <script>
+    const badWords = ['바보', '멍청', '메롱',]
+    const userInput = document.querySelector('#userInput')
+    const output = document.querySelector('#output')
+
+    function filterMessage(event) {
+      let filteredInput = event.target.value
+      // forEach Array Helper Method를 활용하여 badWord 가 사용자 입력에 포함되어 있으면 교체
+      badWords.forEach(function (badWord) {
+        filteredInput = filteredInput.replaceAll(badWord, '**')
+      })
+      output.innerText = filteredInput
+    }
+
+    userInput.addEventListener('input', filterMessage)   
+  </script>
+</body>
