@@ -1,4 +1,4 @@
-# vue-cli
+# todo-vuex-app
 
 ## Project setup
 ```

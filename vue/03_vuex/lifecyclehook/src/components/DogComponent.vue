@@ -33,6 +33,19 @@ export default {
         })
     }
   },
+  created() {
+    this.getDogImage()
+    console.log('Child created!')
+  },
+  mounted() {
+    const button = document.querySelector('button')
+    button.innerText = '멍멍'
+    console.log('Child mounted!')
+  },
+  updated() {
+    console.log('새로운 멍멍이!')
+    console.log('Child updated!')
+  }
 }
 </script>
 

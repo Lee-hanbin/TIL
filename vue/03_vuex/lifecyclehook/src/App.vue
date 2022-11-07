@@ -5,13 +5,13 @@
       v-if="flag"
     />
     <hr>
-    <!-- <DogComponent/> -->
+    <DogComponent/>
   </div>
 </template>
 
 <script>
 import ChildComponent from '@/components/ChildComponent'
-// import DogComponent from '@/components/DogComponent'
+import DogComponent from '@/components/DogComponent'
 
 export default {
   name: 'App',
@@ -27,13 +27,13 @@ export default {
   },
   components: {
     ChildComponent,
-    // DogComponent,
+    DogComponent,
   },
-  // created() {
-  //   console.log('App created!')
-  // },
-  // mounted() {
-  //   console.log('App mounted!')
-  // },
+  created() {
+    console.log('App created!')
+  },
+  mounted() {
+    console.log('App mounted!')
+  },
 }
 </script>
