@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="/todos/">
+    <input type="text">
+    <button>Add</button>
+  </form>
+  <ul></ul>
+
+  <script>
+    const form = document.querySelector('form')
+
+    function addTodo() {
+      // form의 submit 기본 동작을 취소
+      event.preventDefault()
+
+      // input 요소를 선택하고, value 값을 새 변수에 할당
+      const input = document.querySelector('input')
+      const content = input.value
+
+      // 선택 : 빈 값을 허용하지 않음.
+      if (content.trim()) {
+
+        // 새로운 li 요소를 생성하고, input value를 innerText로 지정
+        const li = document.createElement('li')
+        li.innerText = content
+
+        // ul 요소를 선택하고, li 요소를 자식요소로 추가
+        const ul = document.querySelector('ul')
+        ul.appendChild(li)
+
+        // input 요소의 value 값을 초기화
+        event.target.reset()
+
+        // 선택 : 빈 값 입력시 alert 창 출력
+      } else {
+        alert('할 일을 입력해주세요.')
+      }
+    }
+
+    // submit 되었을 때 addTodo 함수를 실행
+    form.addEventListener('submit', addTodo)
+  </script>
+</body>
+
+</html>

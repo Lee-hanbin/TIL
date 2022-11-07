@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-----------------------------app----------------------------------->
+  <div id="app">
+    <p>메세지: {{ msg }}</p>
+    <p>HTML 메세지: {{ rawHTML }}</p>
+    <p>HTML 메세지:
+      <span v-html="rawHTML"></span>
+    </p>
+  </div>
+  <hr>
+  <!-----------------------------app2----------------------------------->
+  <div id="app2">
+    <p v-text="message"></p>
+    <p>{{ message }}</p>
+    <p v-html="html"></p>
+  </div>
+  <!-----------------------------app3----------------------------------->
+  <div id="app3">
+    <!-- <p v-show="isActive">보이니? 안보이니?</p> -->
+    <p v-if="isActive">안보이니? 보이니?</p>
+  </div>
+  <!---------------------------------------------------------------->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+  //////////////////////////////////////////////////////////////////////////
+    const app = new Vue ({ 
+      el: '#app',
+      data: {
+        msg: 'Text interpolation',
+        rawHTML: '<span style="color:red"> 빨간 글씨</span>'
+      }
+    })
+  //////////////////////////////////////////////////////////////////////////
+    const app2 = new Vue ({
+      el: '#app2',
+      data: {
+        message: 'Hello!',
+        html: '<a href=https://www.google.com">GOOGLE</a>'
+      }
+    })
+  //////////////////////////////////////////////////////////////////////////
+    const app3 = new Vue ({
+      el: '#app3',
+      data: {
+        isActive: false
+      }
+    })
+  </script>
+
+  <style>
+
+  </style>
+
+</body>
+</html>
