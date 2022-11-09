@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Articles</h1>
+    <router-link :to="{ name: 'create' }">게시글 작성</router-link>
     <ArticleItem
       v-for="article in articles"
       :key=article.id

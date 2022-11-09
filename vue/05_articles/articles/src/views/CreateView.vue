@@ -2,10 +2,11 @@
   <div>
     <h1>게시글 작성</h1>
     <form @submit.prevent="createArticle">
-      <input type="text" v-model="title"><br>
-      <textarea v-model="content"></textarea>
+      <input type="text" v-model.trim="title"><br>
+      <textarea v-model.trim="content"></textarea>
       <input type="submit">
     </form>
+    <router-link :to="{ name: 'index' }">뒤로가기</router-link>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
         title, content
       }
       this.$store.dispatch('createArticle', payload)
+      this.$router.push({ name: 'index' })    // 글 작성 후, 작성된 페이지로 가기
     }
   }
 }
