@@ -19,7 +19,8 @@ V, E = map(int,input().split())
 graph_di = defaultdict(list)
 for _ in range(E):
     s, e, weight = map(int,input().split())
-    graph_di[s].append((e,weight))
+    graph_di[s].append((weight, e))
+    # graph_di[e].append((weight, s))
     
 
 #1. 구현
@@ -28,7 +29,7 @@ def dijkstra(s):
     distance = [float('inf') for _ in range(V+1)]
     distance[s] = 0
 
-    for e, weight in graph_di[s]:
+    for weight, e in graph_di[s]:
         distance[e] = weight
     
     for _ in range(V+1):
@@ -43,7 +44,7 @@ def dijkstra(s):
                 idx = i
         U.add(idx)
 
-        for e, weight in graph_di[idx]:
+        for weight, e in graph_di[idx]:
             distance[e] = min(distance[e], distance[idx] + weight)
     print(distance)
 dijkstra(1)
