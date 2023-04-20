@@ -1,90 +1,98 @@
 import * as THREE from "three";
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from "react";
 
-function Basic() {
-  // const divContainer = document.querySelector("div")
-  const CanvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  // 카메라 초기 세팅  
-  const defaultCamera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    100
-  );
-
-  const cameraRef = useRef<THREE.PerspectiveCamera>(defaultCamera);
-
+const Basic = () => {
+  const divContainer = useRef<HTMLDivElement>(null);
+  const renderer = useRef<THREE.WebGLRenderer | null>(null);
+  const scene = useRef<THREE.Scene | null>(null);
+  const camera = useRef<THREE.PerspectiveCamera | null>(null);
+  const cube = useRef<THREE.Mesh | null>(null);
 
   /** 카메라 커스텀 함수 */
-  const setupCamera = () => {
-    cameraRef.current.position.z = 2;
-  }
+  const SetupCamera = () => {
+    const width = divContainer.current?.clientWidth || 0;
+    const height = divContainer.current?.clientHeight || 0;
+    const cam = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
+    cam.position.z = 2;
+    camera.current = cam;
+  };
 
   /** 조명 커스텀 함수 */
-  const setupLight = () => {
-
-  }
-
-  const setupModel = () => {
-
-  }
-
-  useEffect(() => {
-    if (!CanvasRef.current) return;
-
-    const camera = cameraRef.current;
-    camera.position.set(0, 50, 170);
-
-    const renderer = new THREE.WebGLRenderer({ 
-      canvas: CanvasRef.current!, 
-      antialias : true // 계단현상 없음
-    });
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    CanvasRef.current.appendChild(renderer.domElement);
-    
-    const scene = new THREE.Scene();
-    
-    // setupCamera()
-    cameraRef.current.position.z = 2;
-
-
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const matertial = new THREE.MeshPhongMaterial({color: 0x44a88});
-    const cube = new THREE.Mesh(geometry, matertial);
-    scene.add(cube)
-
-    const animate = () =>  {
-      requestAnimationFrame( animate );
-
-      // model.rotation.x += 0.01;
-      // model.rotation.y += 0.01;
-
-      renderer.render( scene, camera );
-    }
-
-    animate();
-      
-    // 조명 초기 세팅
+  const SetupLight = () => {
     const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
-    scene.add(light)
+    scene.current?.add(light);
+  };
 
-    window.addEventListener("resize", () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-    });
+  /** 모델 커스텀 함수 */
+  const SetupModel = () => {
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshPhongMaterial({ color: 0x44a88 });
 
-  })
+    const mesh = new THREE.Mesh(geometry, material);
 
-  return (
-    <canvas ref={CanvasRef}>basic</canvas>
+    scene.current?.add(mesh);
+    cube.current = mesh;
+  };
+
+  /** 렌더링 될 때마다 사이즈 초기화 */
+  const resize = () => {
+    const width = divContainer.current?.clientWidth || 0;
+    const height = divContainer.current?.clientHeight || 0;
+
+    if (camera.current !== null) {
+      camera.current.aspect = width / height;
+      camera.current.updateProjectionMatrix();
+    }
+    renderer.current?.setSize(width, height);
+  };
+
+  const render = (time: number) => {
+    renderer.current?.render(scene.current!, camera.current!);
+    update(time);
+    requestAnimationFrame(render);
+  };
+
+  const update = (time: number) => {
+    time *= 0.01;
+    cube.current!.rotation.x = time;
+    cube.current!.rotation.y = time;
+  };
+
+  useEffect(() => {
+    if (divContainer.current) {
+      const ren = new THREE.WebGLRenderer({ antialias: true });
+      ren.setPixelRatio(window.devicePixelRatio);
+      divContainer.current.appendChild(ren.domElement);
+      renderer.current = ren;
+
+      const scn = new THREE.Scene();
+      scene.current = scn;
+
+      SetupCamera();
+      SetupLight();
+      SetupModel();
+
+      // scene.current.background = new THREE.Color("#0000");
+      // let light =new THREE.DirectionalLight(0xffff00, 10);
+      // scene.current.add(light)
+
+      window.onresize = resize;
+      resize();
+
+      requestAnimationFrame(render);
+    }
+  }, []);
+
+  return(
+  <div
+    style={{ backgroundColor: 'grey', width: '100%', height: 1000 }}
+    ref={divContainer} 
+  />
   )
-}
+};
 
 export default Basic;
