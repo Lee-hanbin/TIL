@@ -1,11 +1,14 @@
-import * as THREE from "three";
-
+import App from "../components/aaa";
+import Basic from "../components/Basic";
 import React from 'react';
 
 function IntroPage() {
 
   return (
-    <div>IntroPage</div>
+    <body>
+      {/* <Basic /> */}
+      <App />
+    </body>
   )
 }
 

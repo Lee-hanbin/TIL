@@ -2,9 +2,9 @@ import * as THREE from "three";
 
 import React, { useEffect, useRef, useState } from 'react';
 
-function basic() {
+function Basic() {
   // const divContainer = document.querySelector("div")
-  const DivRef = useRef<HTMLDivElement | null>(null);
+  const CanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // 카메라 초기 세팅  
   const defaultCamera = new THREE.PerspectiveCamera(
@@ -32,22 +32,29 @@ function basic() {
   }
 
   useEffect(() => {
-    if (!DivRef.current) return;
+    if (!CanvasRef.current) return;
 
     const camera = cameraRef.current;
     camera.position.set(0, 50, 170);
 
     const renderer = new THREE.WebGLRenderer({ 
-      canvas: DivRef.current!, 
+      canvas: CanvasRef.current!, 
       antialias : true // 계단현상 없음
     });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    DivRef.current.appendChild(renderer.domElement);
+    CanvasRef.current.appendChild(renderer.domElement);
     
     const scene = new THREE.Scene();
     
-    setupCamera
+    // setupCamera()
+    cameraRef.current.position.z = 2;
+
+
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const matertial = new THREE.MeshPhongMaterial({color: 0x44a88});
+    const cube = new THREE.Mesh(geometry, matertial);
+    scene.add(cube)
 
     const animate = () =>  {
       requestAnimationFrame( animate );
@@ -65,6 +72,7 @@ function basic() {
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
+    scene.add(light)
 
     window.addEventListener("resize", () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -75,8 +83,8 @@ function basic() {
   })
 
   return (
-    <div ref={DivRef}>basic</div>
+    <canvas ref={CanvasRef}>basic</canvas>
   )
 }
 
-export default basic;
+export default Basic;
