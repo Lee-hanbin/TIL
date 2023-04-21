@@ -2,19 +2,23 @@ import * as THREE from "three";
 
 import { useEffect, useRef } from "react";
 
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import circle from "../assets/lowpoly/circle.png"
+
 const Material = () => {
   const divContainer = useRef<HTMLDivElement>(null);
   const renderer = useRef<THREE.WebGLRenderer | null>(null);
   const scene = useRef<THREE.Scene | null>(null);
   const camera = useRef<THREE.PerspectiveCamera | null>(null);
-  const cube = useRef<THREE.Mesh | null>(null);
+  const pointsMaterial = useRef<THREE.Points | null>(null);
+  const controls = useRef<OrbitControls |null>(null);
 
   /** 카메라 커스텀 함수 */
   const SetupCamera = () => {
     const width = divContainer.current?.clientWidth || 0;
     const height = divContainer.current?.clientHeight || 0;
     const cam = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
-    cam.position.z = 2;
+    cam.position.z = 7;
     camera.current = cam;
   };
 
@@ -30,6 +34,40 @@ const Material = () => {
   /** 모델 커스텀 함수 */
   const SetupModel = () => {
 
+    // 10000개의 좌표를 난수로 배열에 추가
+    const vertices = [];
+    for (let i = 0; i < 10000; i++) {
+      const x = THREE.MathUtils.randFloatSpread(5);
+      const y = THREE.MathUtils.randFloatSpread(5);
+      const z = THREE.MathUtils.randFloatSpread(5);
+
+      vertices.push(x, y, z);
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(vertices, 3)     // 3이 의미하는 건 x, y, z 라는 세개의 좌표
+    );
+    
+    // 객체 하나하나의 모형을 조정할 수 있음
+    const sprite = new THREE.TextureLoader().load(circle)
+
+    const material = new THREE.PointsMaterial({
+      map: sprite,
+      alphaTest: 0.5,
+      // color: 0xff0000,
+      // color: "yellow",
+      color: "#00ffff",
+      size: 0.1,
+      // sizeAttenuation: false
+      sizeAttenuation: true     // true 하면 카메라 거리에 따라 크기가 달라진다.
+    });
+
+    const points = new THREE.Points(geometry, material);
+    
+    scene.current?.add(points)
+    pointsMaterial.current = points;
   };
 
   /** 렌더링 될 때마다 사이즈 초기화 */
@@ -44,6 +82,14 @@ const Material = () => {
     renderer.current?.setSize(width, height);
   };
 
+  /** 마우스 그래그로 회전시킴 */
+  const SetupControls = () => {
+    if (camera.current) {
+      controls.current = new OrbitControls(camera.current, divContainer.current!); // OrbitControls를 초기화합니다.
+      controls.current.enableDamping = true;
+    }
+  }
+
   const render = (time: number) => {
     renderer.current?.render(scene.current!, camera.current!);
     update(time);
@@ -51,9 +97,9 @@ const Material = () => {
   };
 
   const update = (time: number) => {
-    time *= 0.01;
-    cube.current!.rotation.x = time;
-    cube.current!.rotation.y = time;
+    time *= 0.001;
+    pointsMaterial.current!.rotation.x = time;
+    pointsMaterial.current!.rotation.y = time;
   };
 
   useEffect(() => {
@@ -69,6 +115,7 @@ const Material = () => {
       SetupCamera();
       SetupLight();
       SetupModel();
+      SetupControls();
 
       // scene.current.background = new THREE.Color("#0000");
       // let light =new THREE.DirectionalLight(0xffff00, 10);
