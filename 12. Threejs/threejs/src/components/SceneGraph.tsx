@@ -7,7 +7,9 @@ const SceneGraph = () => {
   const renderer = useRef<THREE.WebGLRenderer | null>(null);
   const scene = useRef<THREE.Scene | null>(null);
   const camera = useRef<THREE.PerspectiveCamera | null>(null);
-  const SoloarSystemObject = useRef<THREE.Object3D | null>(null);
+  const soloarSystemObject = useRef<THREE.Object3D | null>(null);
+  const earthOrbitObject = useRef<THREE.Object3D | null>(null);
+  const moonOrbitObject = useRef<THREE.Object3D | null>(null);
 
   /** 카메라 커스텀 함수 */
   const SetupCamera = () => {
@@ -51,8 +53,8 @@ const SceneGraph = () => {
     solarSystem.add(sunMesh);
 
     
-    const earthOribit = new THREE.Object3D();
-    solarSystem.add(earthOribit);
+    const earthOrbit = new THREE.Object3D();
+    solarSystem.add(earthOrbit);
 
     const earthMaterial = new THREE.MeshPhongMaterial({
       color: 0x2233ff,
@@ -61,12 +63,12 @@ const SceneGraph = () => {
     });
 
     const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
-    earthOribit.position.x = 10;
-    earthOribit.add(earthMesh);
+    earthOrbit.position.x = 10;
+    earthOrbit.add(earthMesh);
 
     const moonOrbit = new THREE.Object3D();
     moonOrbit.position.x = 2;
-    earthOribit.add(moonOrbit);
+    earthOrbit.add(moonOrbit);
 
     const moonMaterial = new THREE.MeshPhongMaterial({
       color: 0x888888,
@@ -78,7 +80,9 @@ const SceneGraph = () => {
     moonMesh.scale.set(0.5, 0.5, 0.5);
     moonOrbit.add(moonMesh);
     
-    SoloarSystemObject.current = solarSystem;
+    soloarSystemObject.current = solarSystem;
+    earthOrbitObject.current = earthOrbit;
+    moonOrbitObject.current = moonOrbit;
   };
 
   /** 렌더링 될 때마다 사이즈 초기화 */
@@ -101,8 +105,10 @@ const SceneGraph = () => {
 
   const update = (time: number) => {
     time *= 0.001;
-    // SoloarSystemObject.current!.rotation.x = time / 2;
-    SoloarSystemObject.current!.rotation.y = time / 2;
+
+    soloarSystemObject.current!.rotation.y = time / 2;    // 지구를 공전 ( 태양을 자전 )
+    earthOrbitObject.current!.rotation.y = time * 2;      // 지구를 자전 시키면 달도 공전
+    moonOrbitObject.current!.rotation.y = time * 4        // 달을 자전
   };
 
   useEffect(() => {
