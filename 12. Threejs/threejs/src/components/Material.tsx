@@ -52,10 +52,11 @@ const Material = () => {
     
     // 객체 하나하나의 모형을 조정할 수 있음
     const sprite = new THREE.TextureLoader().load(circle)
+    
 
     const material = new THREE.PointsMaterial({
       map: sprite,
-      alphaTest: 0.5,
+      alphaTest: 0.2,       // 객체가 alphaTest 값보다 클때만 픽셀이 렌더링 됨
       // color: 0xff0000,
       // color: "yellow",
       color: "#00ffff",
