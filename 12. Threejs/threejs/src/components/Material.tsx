@@ -10,7 +10,10 @@ const Material = () => {
   const renderer = useRef<THREE.WebGLRenderer | null>(null);
   const scene = useRef<THREE.Scene | null>(null);
   const camera = useRef<THREE.PerspectiveCamera | null>(null);
-  const pointsMaterial = useRef<THREE.Points | null>(null);
+
+  // const pointsMaterial = useRef<THREE.Points | null>(null);
+  const lineMaterial = useRef<THREE.Line | null>(null);
+
   const controls = useRef<OrbitControls |null>(null);
 
   /** 카메라 커스텀 함수 */
@@ -33,42 +36,70 @@ const Material = () => {
 
   /** 모델 커스텀 함수 */
   const SetupModel = () => {
-
-    // 10000개의 좌표를 난수로 배열에 추가
-    const vertices = [];
-    for (let i = 0; i < 10000; i++) {
-      const x = THREE.MathUtils.randFloatSpread(5);
-      const y = THREE.MathUtils.randFloatSpread(5);
-      const z = THREE.MathUtils.randFloatSpread(5);
-
-      vertices.push(x, y, z);
-    }
+    const vertices = [
+      -1, 1, 0,
+       1, 1, 0,
+      -1,-1, 0,
+       1,-1, 0,
+    ];
 
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute(
       "position",
-      new THREE.Float32BufferAttribute(vertices, 3)     // 3이 의미하는 건 x, y, z 라는 세개의 좌표
+      new THREE.Float32BufferAttribute(vertices, 3)
     );
     
-    // 객체 하나하나의 모형을 조정할 수 있음
-    const sprite = new THREE.TextureLoader().load(circle)
+    // // 선에 대한 색상을 지정
+    // const material = new THREE.LineBasicMaterial({ color: 0xffff00 });
+
+    // 라인의 대쉬를 지정! 대신 computeLineDistances를 지정해줘야 적용됨!
+    const material = new THREE.LineDashedMaterial({
+      color: 0xffff00,
+      dashSize: 0.2,    // 선의 길이
+      gapSize: 0.1,     // 빈 공간의 길이
+      scale: 1          // 빈도수? 정의
+    })
+
+    const line = new THREE.Line(geometry, material);
+    line.computeLineDistances();
+    scene.current?.add(line)
+    lineMaterial.current = line;
+
+    // // 10000개의 좌표를 난수로 배열에 추가
+    // const vertices = [];
+    // for (let i = 0; i < 10000; i++) {
+    //   const x = THREE.MathUtils.randFloatSpread(5);
+    //   const y = THREE.MathUtils.randFloatSpread(5);
+    //   const z = THREE.MathUtils.randFloatSpread(5);
+
+    //   vertices.push(x, y, z);
+    // }
+
+    // const geometry = new THREE.BufferGeometry();
+    // geometry.setAttribute(
+    //   "position",
+    //   new THREE.Float32BufferAttribute(vertices, 3)     // 3이 의미하는 건 x, y, z 라는 세개의 좌표
+    // );
+    
+    // // 객체 하나하나의 모형을 조정할 수 있음
+    // const sprite = new THREE.TextureLoader().load(circle)
     
 
-    const material = new THREE.PointsMaterial({
-      map: sprite,
-      alphaTest: 0.2,       // 객체가 alphaTest 값보다 클때만 픽셀이 렌더링 됨
-      // color: 0xff0000,
-      // color: "yellow",
-      color: "#00ffff",
-      size: 0.1,
-      // sizeAttenuation: false
-      sizeAttenuation: true     // true 하면 카메라 거리에 따라 크기가 달라진다.
-    });
+    // const material = new THREE.PointsMaterial({
+    //   map: sprite,
+    //   alphaTest: 0.2,       // 객체가 alphaTest 값보다 클때만 픽셀이 렌더링 됨
+    //   // color: 0xff0000,
+    //   // color: "yellow",
+    //   color: "#00ffff",
+    //   size: 0.1,
+    //   // sizeAttenuation: false
+    //   sizeAttenuation: true     // true 하면 카메라 거리에 따라 크기가 달라진다.
+    // });
 
-    const points = new THREE.Points(geometry, material);
+    // const points = new THREE.Points(geometry, material);
     
-    scene.current?.add(points)
-    pointsMaterial.current = points;
+    // scene.current?.add(points)
+    // pointsMaterial.current = points;
   };
 
   /** 렌더링 될 때마다 사이즈 초기화 */
@@ -99,8 +130,8 @@ const Material = () => {
 
   const update = (time: number) => {
     time *= 0.001;
-    pointsMaterial.current!.rotation.x = time;
-    pointsMaterial.current!.rotation.y = time;
+  //   pointsMaterial.current!.rotation.x = time;
+  //   pointsMaterial.current!.rotation.y = time;
   };
 
   useEffect(() => {
