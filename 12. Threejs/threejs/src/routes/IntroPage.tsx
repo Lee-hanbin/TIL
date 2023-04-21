@@ -1,5 +1,6 @@
 import Basic from "../components/Basic";
 import Geometry from "../components/Geometry";
+import Material from "../components/Material";
 import React from 'react';
 import SceneGraph from "../components/SceneGraph";
 
@@ -9,7 +10,8 @@ function IntroPage() {
     <body>
       {/* <Basic /> */}
       {/* <Geometry /> */}
-      <SceneGraph />
+      {/* <SceneGraph /> */}
+      < Material />
     </body>
   )
 }
