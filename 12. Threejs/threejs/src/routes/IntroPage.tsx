@@ -1,8 +1,9 @@
-import Basic from "../components/Basic";
-import Geometry from "../components/Geometry";
-import Material from "../components/Material";
+import Basic from "../components/01_Basic";
+import CustomGeometry from "../components/05_CustomGeometry";
+import Geometry from "../components/02_Geometry";
+import Material from "../components/04_Material";
 import React from 'react';
-import SceneGraph from "../components/SceneGraph";
+import SceneGraph from "../components/03_SceneGraph";
 
 function IntroPage() {
 
@@ -11,7 +12,8 @@ function IntroPage() {
       {/* <Basic /> */}
       {/* <Geometry /> */}
       {/* <SceneGraph /> */}
-      < Material />
+      {/* < Material /> */}
+      <CustomGeometry />
     </body>
   )
 }
