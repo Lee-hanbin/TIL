@@ -7,6 +7,7 @@ import React from 'react';
 import SceneGraph from "../components/03_SceneGraph";
 import Camera from "../components/07_Camera";
 import Shadow from "../components/08_Shadow";
+import Zoom from "../components/09_Zoom";
 
 function IntroPage() {
 
@@ -19,7 +20,8 @@ function IntroPage() {
       {/* <CustomGeometry /> */}
       {/* <Light /> */}
       {/* <Camera /> */}
-      <Shadow />
+      {/* <Shadow /> */}
+      <Zoom />
     </body>
   )
 }
