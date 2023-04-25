@@ -1,3 +1,4 @@
+import Background from "../components/10_Background";
 import Basic from "../components/01_Basic";
 import Camera from "../components/07_Camera";
 import CustomGeometry from "../components/05_CustomGeometry";
@@ -21,7 +22,8 @@ function IntroPage() {
       {/* <Light /> */}
       {/* <Camera /> */}
       {/* <Shadow /> */}
-      <Zoom />
+      {/* <Zoom /> */}
+      <Background />
     </body>
   )
 }

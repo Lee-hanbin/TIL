@@ -2,29 +2,34 @@ import * as THREE from "three";
 
 import { useEffect, useRef } from "react";
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-const Basic = () => {
+const Background = () => {
   const divContainer = useRef<HTMLDivElement>(null);
   const renderer = useRef<THREE.WebGLRenderer | null>(null);
   const scene = useRef<THREE.Scene | null>(null);
   const camera = useRef<THREE.PerspectiveCamera | null>(null);
-  const cube = useRef<THREE.Mesh | null>(null);
+  const sphere = useRef<THREE.Mesh | null>(null);
   const controls = useRef<OrbitControls |null>(null);
 
   /** 카메라 커스텀 함수 */
   const SetupCamera = () => {
     const width = divContainer.current?.clientWidth || 0;
     const height = divContainer.current?.clientHeight || 0;
-    const cam = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
-    cam.position.z = 2;
+    const cam = new THREE.PerspectiveCamera(
+      75, 
+      width / height, 
+      0.1, 
+      1000
+    );
+    cam.position.z = 80;
     camera.current = cam;
   };
 
   /** 조명 커스텀 함수 */
   const SetupLight = () => {
     const color = 0xffffff;
-    const intensity = 1;
+    const intensity = 1.5;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
     scene.current?.add(light);
@@ -32,13 +37,39 @@ const Basic = () => {
 
   /** 모델 커스텀 함수 */
   const SetupModel = () => {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshPhongMaterial({ color: 0x44a88 });
+    const geometry = new THREE.SphereGeometry();
 
-    const mesh = new THREE.Mesh(geometry, material);
+    //재질
+    const material1 = new THREE.MeshStandardMaterial({
+      color: "#2ecc71",
+      roughness: 0.3,
+      metalness: 0.9
+    })
 
-    scene.current?.add(mesh);
-    cube.current = mesh;
+    const material2 = new THREE.MeshStandardMaterial({
+      color: "#e74c3c",
+      roughness: 0.3,
+      metalness: 0.9
+    })
+
+    const rangeMin = -20.0, rangeMax = 20.0;
+    const gap = 10.0;
+    let flag = true;
+
+    for (let x = rangeMin; x <= rangeMax; x += gap) {
+      for (let y = rangeMin; y <= rangeMax; y += gap) {
+        for (let z = rangeMin*10; z <= rangeMax; z += gap) {
+          flag = !flag;
+
+          const mesh = new THREE.Mesh(geometry, flag ? material1 : material2);
+
+          mesh.position.set(x, y, z);
+
+          scene.current?.add(mesh);
+        }
+      }
+    }
+
   };
 
   /** 렌더링 될 때마다 사이즈 초기화 */
@@ -52,7 +83,7 @@ const Basic = () => {
     }
     renderer.current?.setSize(width, height);
   };
-  
+
   /** 마우스 그래그로 회전시킴 */
   const SetupControls = () => {
     if (camera.current) {
@@ -69,8 +100,8 @@ const Basic = () => {
 
   const update = (time: number) => {
     time *= 0.01;
-    cube.current!.rotation.x = time;
-    cube.current!.rotation.y = time;
+    // sphere.current!.rotation.x = time;
+    // sphere.current!.rotation.y = time;
   };
 
   useEffect(() => {
@@ -106,4 +137,4 @@ const Basic = () => {
   )
 };
 
-export default Basic;
+export default Background;
