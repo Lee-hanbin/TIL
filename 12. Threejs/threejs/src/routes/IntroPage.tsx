@@ -9,6 +9,7 @@ import React from 'react';
 import SceneGraph from "../components/03_SceneGraph";
 import Shadow from "../components/08_Shadow";
 import Zoom from "../components/09_Zoom";
+import ZoomInOut from "../components/11_ZoomInOut";
 
 function IntroPage() {
 
@@ -23,7 +24,8 @@ function IntroPage() {
       {/* <Camera /> */}
       {/* <Shadow /> */}
       {/* <Zoom /> */}
-      <Background />
+      {/* <Background /> */}
+      <ZoomInOut />
     </body>
   )
 }
