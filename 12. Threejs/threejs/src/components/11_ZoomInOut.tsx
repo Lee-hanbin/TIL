@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import grayCar from "../assets/lowpoly/carGray.glb"
 import greenCar from "../assets/lowpoly/carGoblin.glb"
+import { gsap } from 'gsap';
 import redCar from "../assets/lowpoly/carRed.glb"
 import whiteCar from "../assets/lowpoly/carWhite.glb"
 
@@ -154,8 +155,28 @@ const ZoomInOut = () => {
       direction.multiplyScalar(distance).add(centerBox)
     );
 
-    camera.current?.position.copy(newPosition);
-    controls.current?.target.copy(centerBox);
+    // camera.current?.position.copy(newPosition);
+    // 동적으로 변경
+    gsap.to(camera.current!.position, {
+      duration: 0.5,
+      x: newPosition.x, y: newPosition.y, z: newPosition.z
+    })
+
+    // controls.current?.target.copy(centerBox);
+    gsap.to(controls.current!.target, {
+      duration: 0.5,
+      x: centerBox.x,
+      y: centerBox.y,
+      z: centerBox.z,
+      // 매 프레임마다 카메라의 위치 추적
+      onUpdate: () => {
+        camera.current!.lookAt(
+          controls.current!.target.x,
+          controls.current!.target.y,
+          controls.current!.target.z,
+        )
+      }
+    })
     
   }
   /** 렌더링 될 때마다 사이즈 초기화 */
