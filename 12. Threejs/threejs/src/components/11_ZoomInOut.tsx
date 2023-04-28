@@ -140,17 +140,29 @@ const ZoomInOut = () => {
 
   /** 확대 실행 학수 */
   const ZoomFit = (object3d:THREE.Object3D, viewAngle:number) => {
+    // 객체를 감싸고 있는 box
     const box = new THREE.Box3().setFromObject(object3d);
+    // 객체의 정육각형 box의 대각선 길이
     const sizeBox = box.getSize(new THREE.Vector3()).length();
+    // box의 중앙점
     const centerBox = box.getCenter(new THREE.Vector3());
 
+    // 처음에 설정된 벡터
     const direction = new THREE.Vector3(0, 1, 0);
+    // 처음에 설정된 벡터 (0, 1, 0)을 (1, 0 ,0)방향으로 viewAngle만큼 회전한 객체
     direction.applyAxisAngle(new THREE.Vector3(1, 0, 0),
       THREE.MathUtils.degToRad(viewAngle));
 
+    // sizebox의 절반
     const halfSizeModel = sizeBox * 0.5;
+    // 카메라 fov의 절반
     const halfFov = THREE.MathUtils.degToRad(camera.current!.fov * 0.5);
+    // 모델을 확대했을 때, 거리값
     const distance = halfSizeModel / Math.tan(halfFov);
+    // 카메라의 새로운 위치 
+    // 단위 벡터 * distance 로 방향벡터를 얻고
+    // 위치 벡터인 centerBox를 추가하여 
+    // 정확한 위치를 얻어냄 
     const newPosition = new THREE.Vector3().copy(
       direction.multiplyScalar(distance).add(centerBox)
     );
