@@ -14,8 +14,9 @@ const ZoomInOut = () => {
   const renderer = useRef<THREE.WebGLRenderer | null>(null);
   const scene = useRef<THREE.Scene | null>(null);
   const camera = useRef<THREE.PerspectiveCamera | null>(null);
-
   const controls = useRef<OrbitControls |null>(null);
+
+  const raycasterRef = useRef<THREE.Raycaster | null>(null);
 
   /** 카메라 커스텀 함수 */
   const SetupCamera = () => {
@@ -39,7 +40,11 @@ const ZoomInOut = () => {
     scene.current?.add(light1);
 
     const light2 = new THREE.DirectionalLight(color, intensity);
+    light2.castShadow = true;
     light2.position.set(1, 4, 0);
+    light2.shadow.mapSize.width = light2.shadow.mapSize.height = 1024 * 10;
+    light2.shadow.radius = 4;
+    light2.shadow.bias = 0.0001;
     scene.current?.add(light2);
   };
 
@@ -54,7 +59,6 @@ const ZoomInOut = () => {
     items.forEach((item, index) => {
       gltfLoader.load(item.url, (glb) => {
         const obj3d = glb.scene;
-
         const box = new THREE.Box3().setFromObject(obj3d);
         const sizeBox = box.max.z - box.min.z;
         const scale = 1 / sizeBox;
@@ -65,7 +69,13 @@ const ZoomInOut = () => {
         scene.current?.add(obj3d);
         obj3d.name = "car"
 
-        scene.current?.add(new THREE.BoxHelper(obj3d))
+        // scene.current?.add(new THREE.BoxHelper(obj3d))
+        
+        // 자동차는 그림자  던지고 받고
+        obj3d.traverse(child => {
+          child.castShadow = true;
+          child.receiveShadow = true;
+        })
       })
     })
 
@@ -77,10 +87,77 @@ const ZoomInOut = () => {
     });
     const box = new THREE.Mesh(boxGeometry, boxMaterial);
 
+    // mesh는 그림자 받기만
+    box.receiveShadow = true;
+    box.name = "box";
+
     box.position.set(0, -0.05, -0.3)
     scene.current?.add(box)
   };
 
+  const SetupPicking = () => {
+    const raycaster = new THREE.Raycaster();
+    divContainer.current?.addEventListener("dblclick", OnDblClick);
+    raycasterRef.current = raycaster;
+  }
+
+  const OnDblClick = (event:any) => {
+    if (event.isPrimary === false) return;
+
+    // 현재 마우스의 위치 찾기
+    const mouse = new THREE.Vector2
+    mouse.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
+
+    raycasterRef.current?.setFromCamera(mouse, camera.current!)
+    
+    // 객체 이름이 car인 객체만 고르기
+    const cars:THREE.Object3D[] = [];
+    scene.current?.traverse( (obj3d) => {
+      if (obj3d.name === "car") {
+        cars.push(obj3d);
+      }
+    })
+    
+    // 더블 클릭된 곳과 해당 객체의 충돌점을 찾아서 객체를 정확히 추적
+    for(let i=0; i<cars.length; i++) {
+      const car = cars[i];
+
+      const targets = raycasterRef.current?.intersectObject(car);
+      if(targets!.length > 0) {
+        // 더블클릭된 차 확대 
+        ZoomFit(car, 70)
+        return;
+      }
+    }
+
+    const box = scene.current?.getObjectByName("box");
+    // 무대 확대 코드
+    ZoomFit(box!, 45)
+
+  }
+
+
+  /** 확대 실행 학수 */
+  const ZoomFit = (object3d:THREE.Object3D, viewAngle:number) => {
+    const box = new THREE.Box3().setFromObject(object3d);
+    const sizeBox = box.getSize(new THREE.Vector3()).length();
+    const centerBox = box.getCenter(new THREE.Vector3());
+
+    const direction = new THREE.Vector3(0, 1, 0);
+    direction.applyAxisAngle(new THREE.Vector3(1, 0, 0),
+      THREE.MathUtils.degToRad(viewAngle));
+
+    const halfSizeModel = sizeBox * 0.5;
+    const halfFov = THREE.MathUtils.degToRad(camera.current!.fov * 0.5);
+    const distance = halfSizeModel / Math.tan(halfFov);
+    const newPosition = new THREE.Vector3().copy(
+      direction.multiplyScalar(distance).add(centerBox)
+    );
+
+    camera.current?.position.copy(newPosition);
+    controls.current?.target.copy(centerBox);
+    
+  }
   /** 렌더링 될 때마다 사이즈 초기화 */
   const resize = () => {
     const width = divContainer.current?.clientWidth || 0;
@@ -110,6 +187,8 @@ const ZoomInOut = () => {
   const update = (time: number) => {
     time *= 0.01;
 
+    controls.current?.update()
+
   };
 
   useEffect(() => {
@@ -117,6 +196,7 @@ const ZoomInOut = () => {
       const ren = new THREE.WebGLRenderer({ antialias: true });
       ren.setPixelRatio(window.devicePixelRatio);
       divContainer.current.appendChild(ren.domElement);
+
       ren.shadowMap.enabled = true;
       ren.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.current = ren;
@@ -128,6 +208,10 @@ const ZoomInOut = () => {
       SetupLight();
       SetupModel();
       SetupControls();
+
+      SetupPicking();
+      // divContainer.current.addEventListener("dblclick", OnDblClick, false);
+
       // scene.current.background = new THREE.Color("#0000");
       // let light =new THREE.DirectionalLight(0xffff00, 10);
       // scene.current.add(light)
