@@ -10,6 +10,7 @@ import SceneGraph from "../components/03_SceneGraph";
 import Shadow from "../components/08_Shadow";
 import Zoom from "../components/09_Zoom";
 import ZoomInOut from "../components/11_ZoomInOut";
+import Ranking from "../components/12_Ranking";
 
 function IntroPage() {
 
@@ -22,10 +23,11 @@ function IntroPage() {
       {/* <CustomGeometry /> */}
       {/* <Light /> */}
       {/* <Camera /> */}
-      {/* <Shadow /> */}
+      {/* <Shadow / > */}
       {/* <Zoom /> */}
       {/* <Background /> */}
-      <ZoomInOut />
+      {/* <ZoomInOut /> */}
+      <Ranking />
     </body>
   )
 }
