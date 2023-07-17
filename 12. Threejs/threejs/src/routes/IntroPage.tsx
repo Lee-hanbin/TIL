@@ -2,6 +2,7 @@ import Background from "../components/10_Background";
 import Basic from "../components/01_Basic";
 import Camera from "../components/07_Camera";
 import CustomGeometry from "../components/05_CustomGeometry";
+import FontGeometry from "../components/12_FontGeometry";
 import Geometry from "../components/02_Geometry";
 import Light from "../components/06_Light";
 import Material from "../components/04_Material";
@@ -28,6 +29,7 @@ function IntroPage() {
       {/* <Background /> */}
       {/* <ZoomInOut /> */}
       <Ranking />
+      <FontGeometry />
     </body>
   )
 }
