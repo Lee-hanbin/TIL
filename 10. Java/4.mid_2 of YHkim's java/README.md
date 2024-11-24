@@ -71,3 +71,33 @@
   }
   ```
 - `제네릭 타입`보다 `제네릭 메서드`가 항상 우선순위가 높다.
+
+### Wildcard
+- `*`, `?` 와 같이 하나 이상의 문자들을 상징하는데 여기서 와일드 카드는 여러 타입이 들어올 수 있다는 뜻이다.
+- 제네릭 타입을 조금 더 편리하게 사용할 수 있게 한다.
+- 와일드카드는 제네릭 타입이나, 제네릭 메서드를 선언하는 것이 아니라, 이미 만들어진 제네릭 타입을 활용할 때, 사용한다.
+- 예시
+  ```Java
+    //GenericMethod
+  static <T extends Animal> T printGenericV3(Box<T> box) {
+        T t = box.get();
+        System.out.println("이름 = " + t.getName());
+        return t;
+    }
+
+    //Wildcard - Animal 클래스의 모든 자식 가능
+    static Animal printWildcardV3(Box<? extends Animal> box) {
+        Animal animal = box.get();
+        System.out.println("이름 = " + animal.getName());
+        return animal;
+    }
+  ```
+
+
+### Type eraser
+- eraser는 지우개라는 뜻
+- 제네릭은 자바 컴파일 단계에서만 사용되고, 컴파일 이후에는 제네릭 정보가 삭제된다. 즉, 제네릭에 사용된 타입 매개변수가 모두 사라지는 것이다. 
+  ```
+  컴파일 전인 .java에는 제네릭의 타입 매개변수가 존재하지만, 컴파일 이후인 자바 바이트코드 .class 에는 타입 매개변수가 존재하지 않는다.
+  ```
+- 자바의 제네릭 타입은 컴파일 시저멩만 존재하고, 런타임 시에는 제네릭 정보가 지워지는데, 이것을 타입 이레이저라 하낟.
